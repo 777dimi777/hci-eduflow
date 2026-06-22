@@ -1,9 +1,10 @@
-import { Navigate, Route, Routes } from 'react-router'
-import AppLayout from './layouts/AppLayout'
-import DashboardPage from './pages/DashboardPage'
-import SectionPage from './pages/SectionPage'
-import NotFoundPage from './pages/NotFoundPage'
-import SubjectsPage from './pages/SubjectsPage'
+import { Navigate, Route, Routes } from "react-router";
+import AppLayout from "./layouts/AppLayout";
+import DashboardPage from "./pages/DashboardPage";
+import SectionPage from "./pages/SectionPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import SubjectsPage from "./pages/SubjectsPage";
+import TasksPage from './pages/TasksPage'
 function App() {
   return (
     <Routes>
@@ -14,16 +15,7 @@ function App() {
 
         <Route path="/subjects" element={<SubjectsPage />} />
 
-        <Route
-          path="/tasks"
-          element={
-            <SectionPage
-              title="Obaveze"
-              description="Ovde će biti tabela obaveza, statusi, prioriteti, filteri i pretraga."
-              icon="bi-check2-square"
-            />
-          }
-        />
+       <Route path="/tasks" element={<TasksPage />} />
 
         <Route
           path="/calendar"
@@ -83,7 +75,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;
