@@ -3,7 +3,7 @@ import AppLayout from './layouts/AppLayout'
 import DashboardPage from './pages/DashboardPage'
 import SectionPage from './pages/SectionPage'
 import NotFoundPage from './pages/NotFoundPage'
-
+import SubjectsPage from './pages/SubjectsPage'
 function App() {
   return (
     <Routes>
@@ -12,16 +12,7 @@ function App() {
 
         <Route path="/dashboard" element={<DashboardPage />} />
 
-        <Route
-          path="/subjects"
-          element={
-            <SectionPage
-              title="Predmeti"
-              description="Ovde će korisnik dodavati, menjati i pratiti svoje predmete."
-              icon="bi-book"
-            />
-          }
-        />
+        <Route path="/subjects" element={<SubjectsPage />} />
 
         <Route
           path="/tasks"
