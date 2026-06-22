@@ -6,11 +6,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import './index.css'
 import App from './App.jsx'
+import { SubjectProvider } from './context/SubjectContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <SubjectProvider>
+        <App />
+      </SubjectProvider>
     </BrowserRouter>
   </StrictMode>
 )
