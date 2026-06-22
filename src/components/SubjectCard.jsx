@@ -1,4 +1,17 @@
+import { useTasks } from '../context/TaskContext'
+import { formatDate } from '../utils/dateUtils'
+
 function SubjectCard({ subject, onDelete }) {
+  const { tasks } = useTasks()
+
+  const activeTasks = tasks.filter(
+    (task) => task.subjectId === subject.id && task.status !== 'done'
+  )
+
+  const nextTask = [...activeTasks].sort((firstTask, secondTask) =>
+    firstTask.dueDate.localeCompare(secondTask.dueDate)
+  )[0]
+
   return (
     <article className={`subject-card subject-card-${subject.color}`}>
       <div className="subject-card-header">
@@ -54,12 +67,12 @@ function SubjectCard({ subject, onDelete }) {
       <div className="subject-card-footer">
         <span>
           <i className="bi bi-list-task"></i>
-          {subject.tasks} aktivne obaveze
+          {activeTasks.length} aktivne obaveze
         </span>
 
         <span>
           <i className="bi bi-clock"></i>
-          {subject.nextDeadline}
+          {nextTask ? formatDate(nextTask.dueDate) : 'Nema roka'}
         </span>
       </div>
     </article>

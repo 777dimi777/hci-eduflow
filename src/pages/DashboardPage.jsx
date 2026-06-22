@@ -1,31 +1,12 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router'
 import { useSubjects } from '../context/SubjectContext'
-
-const upcomingTasks = [
-  {
-    subject: 'Interakcija čovek–računar',
-    task: 'Prvi kolokvijum',
-    date: '24.06.2026.',
-  },
-  {
-    subject: 'Softversko inženjerstvo',
-    task: 'HCI projekat — prva faza',
-    date: '27.06.2026.',
-  },
-  {
-    subject: 'Paralelno programiranje',
-    task: 'Priprema za ispit',
-    date: '02.07.2026.',
-  },
-  {
-    subject: 'Računarske mreže',
-    task: 'Domaći zadatak',
-    date: '05.07.2026.',
-  },
-]
+import { useTasks } from '../context/TaskContext'
+import { formatDate } from '../utils/dateUtils'
 
 function DashboardPage() {
   const { subjects } = useSubjects()
+  const { tasks } = useTasks()
 
   const averageProgress =
     subjects.length === 0
@@ -35,6 +16,22 @@ function DashboardPage() {
             subjects.length
         )
 
+  const activeTasks = tasks.filter((task) => task.status !== 'done')
+
+  const upcomingTasks = useMemo(() => {
+    return [...activeTasks]
+      .sort((firstTask, secondTask) =>
+        firstTask.dueDate.localeCompare(secondTask.dueDate)
+      )
+      .slice(0, 4)
+  }, [tasks])
+
+  function getSubjectName(subjectId) {
+    const subject = subjects.find((item) => item.id === subjectId)
+
+    return subject ? subject.name : 'Obrisani predmet'
+  }
+
   const statistics = [
     {
       value: subjects.length,
@@ -42,12 +39,12 @@ function DashboardPage() {
       icon: 'bi-book',
     },
     {
-      value: '12',
-      label: 'Obaveza',
+      value: activeTasks.length,
+      label: 'Aktivnih obaveza',
       icon: 'bi-list-check',
     },
     {
-      value: '5',
+      value: upcomingTasks.length,
       label: 'Predstojećih rokova',
       icon: 'bi-calendar-event',
     },
@@ -57,8 +54,6 @@ function DashboardPage() {
       icon: 'bi-pie-chart',
     },
   ]
-
-  const subjectProgress = subjects.slice(0, 5)
 
   return (
     <section>
@@ -104,18 +99,24 @@ function DashboardPage() {
           </div>
 
           <div className="upcoming-task-list">
-            {upcomingTasks.map((task) => (
-              <article className="upcoming-task" key={task.subject}>
-                <div className="task-marker"></div>
+            {upcomingTasks.length > 0 ? (
+              upcomingTasks.map((task) => (
+                <article className="upcoming-task" key={task.id}>
+                  <div className="task-marker"></div>
 
-                <div className="task-main-info">
-                  <strong>{task.subject}</strong>
-                  <span>{task.task}</span>
-                </div>
+                  <div className="task-main-info">
+                    <strong>{getSubjectName(task.subjectId)}</strong>
+                    <span>{task.title}</span>
+                  </div>
 
-                <time>{task.date}</time>
-              </article>
-            ))}
+                  <time>{formatDate(task.dueDate)}</time>
+                </article>
+              ))
+            ) : (
+              <p className="empty-inline-message">
+                Trenutno nema aktivnih obaveza.
+              </p>
+            )}
           </div>
 
           <Link to="/calendar" className="panel-link">
@@ -135,8 +136,8 @@ function DashboardPage() {
           </div>
 
           <div className="progress-list">
-            {subjectProgress.length > 0 ? (
-              subjectProgress.map((subject) => (
+            {subjects.length > 0 ? (
+              subjects.slice(0, 5).map((subject) => (
                 <article className="subject-progress" key={subject.id}>
                   <div className="subject-progress-top">
                     <span>{subject.name}</span>

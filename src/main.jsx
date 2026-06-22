@@ -7,12 +7,15 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import './index.css'
 import App from './App.jsx'
 import { SubjectProvider } from './context/SubjectContext'
+import { TaskProvider } from './context/TaskContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <SubjectProvider>
-        <App />
+        <TaskProvider>
+          <App />
+        </TaskProvider>
       </SubjectProvider>
     </BrowserRouter>
   </StrictMode>
