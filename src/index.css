@@ -10433,3 +10433,454 @@ html.eduflow-enhanced-focus :focus-visible {
     padding: 0 17px 17px;
   }
 }
+html[data-theme="light"],
+html[data-theme="light"] body,
+html[data-theme="light"] #root {
+  background: #edf7ef;
+  color: #18321f;
+}
+
+html[data-theme="light"] .app-shell,
+html[data-theme="light"] .main-content,
+html[data-theme="light"] .page-content,
+html[data-theme="light"] .dashboard-page,
+html[data-theme="light"] .subjects-page,
+html[data-theme="light"] .tasks-page,
+html[data-theme="light"] .calendar-page,
+html[data-theme="light"] .statistics-page,
+html[data-theme="light"] .settings-page,
+html[data-theme="light"] .materials-page,
+html[data-theme="light"] .passed-exams-page,
+html[data-theme="light"] .grade-goal-page,
+html[data-theme="light"] .subject-details-page {
+  background: #edf7ef !important;
+}
+
+html[data-theme="light"] .sidebar,
+html[data-theme="light"] .topbar {
+  border-color: rgba(22, 65, 35, 0.12) !important;
+  background: rgba(246, 252, 247, 0.97) !important;
+}
+
+html[data-theme="light"] .sidebar a,
+html[data-theme="light"] .sidebar button {
+  color: #4f6957;
+}
+
+html[data-theme="light"] .sidebar a:hover,
+html[data-theme="light"] .sidebar a.active {
+  background: rgba(74, 222, 128, 0.13);
+  color: #166534;
+}
+
+html[data-theme="light"] [class*="-card"],
+html[data-theme="light"] [class*="-panel"],
+html[data-theme="light"] [class*="-modal"],
+html[data-theme="light"] [class*="-dropdown"],
+html[data-theme="light"] .command-palette,
+html[data-theme="light"] .next-exam-countdown,
+html[data-theme="light"] .daily-load-insight,
+html[data-theme="light"] .getting-started-panel,
+html[data-theme="light"] .smart-study-assistant,
+html[data-theme="light"] .focus-timer-panel,
+html[data-theme="light"] .focus-consistency-panel,
+html[data-theme="light"] .daily-reflection-panel,
+html[data-theme="light"] .deadline-timeline-panel,
+html[data-theme="light"] .data-backup-panel {
+  border-color: rgba(22, 65, 35, 0.13) !important;
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #f1f9f2
+  ) !important;
+  box-shadow: 0 8px 24px rgba(25, 75, 38, 0.06);
+}
+
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] strong {
+  color: #18321f !important;
+}
+
+html[data-theme="light"] p:not(.page-eyebrow),
+html[data-theme="light"] small,
+html[data-theme="light"] [class*="-description"],
+html[data-theme="light"] [class*="-meta"],
+html[data-theme="light"] [class*="-subtitle"] {
+  color: #5c7663 !important;
+}
+
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
+  border-color: rgba(22, 65, 35, 0.18) !important;
+  background: #ffffff !important;
+  color: #18321f !important;
+}
+
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder {
+  color: #829488 !important;
+}
+
+html[data-theme="light"] .topbar-search,
+html[data-theme="light"] .topbar-icon-button,
+html[data-theme="light"] .profile-preview-button,
+html[data-theme="light"] .command-palette-launcher,
+html[data-theme="light"] .outline-button,
+html[data-theme="light"] .student-profile-cancel-button {
+  border-color: rgba(22, 65, 35, 0.14) !important;
+  background: #ffffff !important;
+  color: #31583d !important;
+}
+
+html[data-theme="light"] .topbar-icon-button:hover,
+html[data-theme="light"] .profile-preview-button:hover,
+html[data-theme="light"] .command-palette-launcher:hover,
+html[data-theme="light"] .outline-button:hover {
+  background: #e4f5e7 !important;
+  color: #166534 !important;
+}
+
+html[data-theme="light"] .command-palette-backdrop,
+html[data-theme="light"] .student-profile-modal-backdrop {
+  background: rgba(22, 47, 29, 0.28);
+}
+
+html[data-theme="light"] .command-palette-result:hover,
+html[data-theme="light"] .command-palette-result-active {
+  background: rgba(74, 222, 128, 0.13);
+}
+
+html[data-theme="light"] .toast-viewport .app-toast {
+  border-color: rgba(22, 65, 35, 0.15);
+  background: #ffffff;
+}
+
+html[data-theme="light"] .app-toast p {
+  color: #24462d !important;
+}
+.sidebar-theme-toggle {
+  position: relative;
+  display: flex;
+  width: calc(100% - 20px);
+  min-height: 48px;
+  align-items: center;
+  gap: 10px;
+  margin: auto 10px 12px;
+  padding: 0 11px;
+  overflow: hidden;
+  border: 1px solid rgba(74, 222, 128, 0.48);
+  border-radius: 13px;
+  background: linear-gradient(
+    135deg,
+    rgba(12, 42, 25, 0.98),
+    rgba(14, 66, 34, 0.96)
+  );
+  box-shadow:
+    0 0 0 1px rgba(74, 222, 128, 0.08),
+    0 8px 22px rgba(0, 0, 0, 0.24),
+    inset 0 1px rgba(255, 255, 255, 0.07);
+  color: #bfffd1;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.sidebar-theme-toggle::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: #4ade80;
+  box-shadow: 0 0 15px #4ade80;
+  content: "";
+}
+
+.sidebar-theme-toggle:hover {
+  border-color: #86efac;
+  background: linear-gradient(
+    135deg,
+    rgba(16, 58, 32, 1),
+    rgba(18, 84, 42, 0.98)
+  );
+  box-shadow:
+    0 0 0 1px rgba(134, 239, 172, 0.18),
+    0 10px 27px rgba(34, 197, 94, 0.2);
+  transform: translateY(-2px);
+}
+
+.sidebar-theme-toggle-icon {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid rgba(134, 239, 172, 0.34);
+  border-radius: 10px;
+  background: rgba(74, 222, 128, 0.16);
+  color: #69f59c;
+  filter: drop-shadow(0 0 7px rgba(74, 222, 128, 0.48));
+  font-size: 1rem;
+}
+
+.sidebar-theme-toggle-text {
+  overflow: hidden;
+  flex: 1;
+  color: #d7ffe2;
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-theme-toggle-dot {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow:
+    0 0 0 4px rgba(74, 222, 128, 0.13),
+    0 0 13px #4ade80;
+}
+
+.sidebar-theme-toggle-light {
+  border-color: rgba(250, 204, 21, 0.62);
+  background: linear-gradient(
+    135deg,
+    rgba(77, 59, 10, 0.96),
+    rgba(116, 86, 12, 0.93)
+  );
+}
+
+.sidebar-theme-toggle-light::before {
+  background: #facc15;
+  box-shadow: 0 0 15px #facc15;
+}
+
+.sidebar-theme-toggle-light .sidebar-theme-toggle-icon {
+  border-color: rgba(254, 240, 138, 0.48);
+  background: rgba(250, 204, 21, 0.18);
+  color: #fef08a;
+  filter: drop-shadow(0 0 7px rgba(250, 204, 21, 0.5));
+}
+
+.sidebar-theme-toggle-light .sidebar-theme-toggle-dot {
+  background: #facc15;
+  box-shadow:
+    0 0 0 4px rgba(250, 204, 21, 0.14),
+    0 0 13px #facc15;
+}
+
+html[data-theme="light"] .sidebar-theme-toggle {
+  border-color: rgba(22, 163, 74, 0.5);
+  background: linear-gradient(135deg, #d8fbe2, #bdf3cd);
+  box-shadow:
+    0 6px 18px rgba(22, 101, 52, 0.13),
+    inset 0 1px rgba(255, 255, 255, 0.8);
+}
+
+html[data-theme="light"] .sidebar-theme-toggle-text {
+  color: #14532d;
+}
+
+html[data-theme="light"] .sidebar-theme-toggle-icon {
+  border-color: rgba(22, 163, 74, 0.36);
+  background: rgba(255, 255, 255, 0.65);
+  color: #15803d;
+}
+
+@media (max-width: 900px) {
+  .sidebar-theme-toggle {
+    width: 48px;
+    justify-content: center;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0;
+  }
+
+  .sidebar-theme-toggle-text,
+  .sidebar-theme-toggle-dot {
+    display: none;
+  }
+}
+/* ===== LIGHT THEME CONTRAST FIX ===== */
+
+html[data-theme="light"],
+html[data-theme="light"] body,
+html[data-theme="light"] #root {
+  background: #eaf3ec;
+  color: #163222;
+}
+
+html[data-theme="light"] .eduflow-app,
+html[data-theme="light"] .eduflow-main,
+html[data-theme="light"] .page-content {
+  background: #eef5f0 !important;
+}
+
+html[data-theme="light"] .topbar,
+html[data-theme="light"] .eduflow-sidebar {
+  background: #f7fbf8 !important;
+  border-color: rgba(22, 50, 34, 0.12) !important;
+}
+
+html[data-theme="light"] .sidebar-link,
+html[data-theme="light"] .sidebar-link-text,
+html[data-theme="light"] .sidebar-section-label,
+html[data-theme="light"] .sidebar-brand-text {
+  color: #355643 !important;
+}
+
+html[data-theme="light"] .sidebar-link:hover,
+html[data-theme="light"] .sidebar-link-active {
+  background: rgba(34, 197, 94, 0.16) !important;
+  color: #14532d !important;
+}
+
+html[data-theme="light"] [class*="-panel"],
+html[data-theme="light"] [class*="-card"],
+html[data-theme="light"] [class*="-modal"],
+html[data-theme="light"] [class*="-dropdown"],
+html[data-theme="light"] .subject-card,
+html[data-theme="light"] .topbar-search,
+html[data-theme="light"] .profile-preview,
+html[data-theme="light"] .focus-timer-panel,
+html[data-theme="light"] .daily-reflection-panel,
+html[data-theme="light"] .focus-consistency-panel,
+html[data-theme="light"] .getting-started-panel,
+html[data-theme="light"] .next-exam-countdown,
+html[data-theme="light"] .smart-study-assistant,
+html[data-theme="light"] .command-palette,
+html[data-theme="light"] .student-profile-modal,
+html[data-theme="light"] .student-profile-dropdown {
+  background: #ffffff !important;
+  border: 1px solid rgba(22, 50, 34, 0.14) !important;
+  box-shadow: 0 8px 24px rgba(20, 60, 35, 0.07) !important;
+}
+
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] strong,
+html[data-theme="light"] .profile-text strong,
+html[data-theme="light"] .student-profile-dropdown-heading strong,
+html[data-theme="light"] .focus-timer-task-preview strong,
+html[data-theme="light"] .next-exam-content h2 {
+  color: #163222 !important;
+}
+
+html[data-theme="light"] p,
+html[data-theme="light"] span,
+html[data-theme="light"] small,
+html[data-theme="light"] label,
+html[data-theme="light"] .profile-text span,
+html[data-theme="light"] .page-description,
+html[data-theme="light"] .student-profile-dropdown-heading span,
+html[data-theme="light"] .focus-timer-task-preview span,
+html[data-theme="light"] .next-exam-content small {
+  color: #4e6a59 !important;
+}
+
+html[data-theme="light"] .page-eyebrow {
+  color: #18803a !important;
+}
+
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
+  background: #ffffff !important;
+  color: #163222 !important;
+  border: 1px solid rgba(22, 50, 34, 0.18) !important;
+}
+
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder {
+  color: #7b9184 !important;
+}
+
+html[data-theme="light"] .topbar-icon-button,
+html[data-theme="light"] .profile-preview-button,
+html[data-theme="light"] .command-palette-launcher,
+html[data-theme="light"] .student-profile-cancel-button,
+html[data-theme="light"] .focus-timer-reset-button {
+  background: #ffffff !important;
+  border: 1px solid rgba(22, 50, 34, 0.15) !important;
+  color: #2f5642 !important;
+}
+
+html[data-theme="light"] .topbar-icon-button:hover,
+html[data-theme="light"] .profile-preview-button:hover,
+html[data-theme="light"] .command-palette-launcher:hover,
+html[data-theme="light"] .student-profile-cancel-button:hover,
+html[data-theme="light"] .focus-timer-reset-button:hover {
+  background: #edf8f0 !important;
+  color: #14532d !important;
+}
+
+html[data-theme="light"] .focus-timer-primary-button,
+html[data-theme="light"] .student-profile-save-button,
+html[data-theme="light"] .daily-reflection-save-button,
+html[data-theme="light"] .student-profile-edit-button {
+  background: #1f9d4c !important;
+  border: 1px solid #18803a !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="light"] .focus-timer-primary-button:hover,
+html[data-theme="light"] .student-profile-save-button:hover,
+html[data-theme="light"] .daily-reflection-save-button:hover,
+html[data-theme="light"] .student-profile-edit-button:hover {
+  background: #18803a !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="light"] .focus-timer-duration-options button,
+html[data-theme="light"] .daily-reflection-moods button,
+html[data-theme="light"] .settings-toggle > span {
+  background: #f7fbf8 !important;
+  border-color: rgba(22, 50, 34, 0.16) !important;
+  color: #355643 !important;
+}
+
+html[data-theme="light"] .focus-timer-duration-active,
+html[data-theme="light"] .daily-reflection-mood-active {
+  background: rgba(34, 197, 94, 0.14) !important;
+  border-color: #22c55e !important;
+  color: #14532d !important;
+}
+
+html[data-theme="light"] .focus-timer-circle {
+  background: radial-gradient(circle at 30% 30%, #1c5b35, #0e2f1d) !important;
+  box-shadow: 0 0 0 12px rgba(34, 197, 94, 0.10) !important;
+}
+
+html[data-theme="light"] .focus-timer-circle strong {
+  color: #ffffff !important;
+}
+
+html[data-theme="light"] .focus-timer-circle span,
+html[data-theme="light"] .focus-timer-circle small {
+  color: #d8f5e1 !important;
+}
+
+html[data-theme="light"] .focus-timer-task-preview {
+  background: #f7fbf8 !important;
+  border: 1px solid rgba(22, 50, 34, 0.10) !important;
+}
+
+html[data-theme="light"] .command-palette-backdrop,
+html[data-theme="light"] .student-profile-modal-backdrop {
+  background: rgba(18, 44, 28, 0.24) !important;
+}
+
+html[data-theme="light"] .notification-dot,
+html[data-theme="light"] .sidebar-theme-toggle-dot {
+  background: #22c55e !important;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.6) !important;
+}

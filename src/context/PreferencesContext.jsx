@@ -5,6 +5,7 @@ const PreferencesContext = createContext(null);
 const STORAGE_KEY = "eduflow-preferences";
 
 const defaultPreferences = {
+  theme: "dark",
   reducedMotion: false,
   largerText: false,
   enhancedFocus: false,
@@ -21,6 +22,7 @@ function loadPreferences() {
     const parsedPreferences = JSON.parse(savedPreferences);
 
     return {
+      theme: parsedPreferences.theme === "light" ? "light" : "dark",
       reducedMotion: Boolean(parsedPreferences.reducedMotion),
       largerText: Boolean(parsedPreferences.largerText),
       enhancedFocus: Boolean(parsedPreferences.enhancedFocus),
@@ -37,6 +39,9 @@ export function PreferencesProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
 
     const root = document.documentElement;
+
+    root.dataset.theme = preferences.theme;
+    root.style.colorScheme = preferences.theme;
 
     root.classList.toggle(
       "eduflow-reduced-motion",

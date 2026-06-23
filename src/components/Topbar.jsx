@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useStudentProfile } from "../context/StudentProfileContext";
 import { useToast } from "../context/ToastContext";
-
 function getFirstName(fullName) {
   return String(fullName || "Student")
     .trim()
@@ -15,7 +14,6 @@ function getAvatarLetter(fullName) {
 function Topbar() {
   const { studentProfile, updateStudentProfile } = useStudentProfile();
   const { showToast } = useToast();
-
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [draftProfile, setDraftProfile] = useState(studentProfile);
@@ -74,7 +72,19 @@ function Topbar() {
       type: "success",
     });
   }
+  function handleThemeToggle() {
+    const nextTheme = preferences.theme === "dark" ? "light" : "dark";
 
+    updatePreference("theme", nextTheme);
+
+    showToast({
+      message:
+        nextTheme === "light"
+          ? "Uključen je dnevni prikaz."
+          : "Uključen je noćni prikaz.",
+      type: "info",
+    });
+  }
   return (
     <>
       <header className="topbar">
@@ -94,6 +104,7 @@ function Topbar() {
         </div>
 
         <div className="topbar-actions">
+          
           <button
             type="button"
             className="topbar-icon-button"
@@ -259,10 +270,7 @@ function Topbar() {
                   Otkaži
                 </button>
 
-                <button
-                  type="submit"
-                  className="student-profile-save-button"
-                >
+                <button type="submit" className="student-profile-save-button">
                   <i className="bi bi-check2-circle"></i>
                   Sačuvaj profil
                 </button>
