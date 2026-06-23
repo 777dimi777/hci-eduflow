@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { useTasks } from "../context/TaskContext";
 import { useToast } from "../context/ToastContext";
 import { toDateKey } from "../utils/dateUtils";
+import { useFocusHistory } from "../context/FocusHistoryContext";
 
 const STORAGE_KEY = "eduflow-focus-timer";
 const DEFAULT_DURATION = 25;
@@ -55,7 +56,10 @@ function loadTimer() {
       durationMinutes,
       remainingSeconds,
       selectedTaskId: parsedTimer.selectedTaskId || "",
-      sessionsCompleted: Math.max(0, Number(parsedTimer.sessionsCompleted) || 0),
+      sessionsCompleted: Math.max(
+        0,
+        Number(parsedTimer.sessionsCompleted) || 0,
+      ),
     };
   } catch {
     return fallback;
@@ -75,7 +79,7 @@ function formatTimer(seconds) {
 function FocusTimerPanel() {
   const { tasks } = useTasks();
   const { showToast } = useToast();
-
+  const { addFocusSession } = useFocusHistory();
   const [timer, setTimer] = useState(loadTimer);
   const [isRunning, setIsRunning] = useState(false);
 
@@ -125,7 +129,6 @@ function FocusTimerPanel() {
 
     return () => window.clearInterval(intervalId);
   }, [isRunning]);
-
   useEffect(() => {
     if (timer.remainingSeconds !== 0 || !isRunning) {
       return;
@@ -138,6 +141,11 @@ function FocusTimerPanel() {
       sessionsCompleted: previousTimer.sessionsCompleted + 1,
     }));
 
+    addFocusSession({
+      durationMinutes: timer.durationMinutes,
+      taskId: timer.selectedTaskId,
+    });
+
     showToast({
       message: activeTask
         ? `Fokus sesija za „${activeTask.title}“ je završena.`
@@ -145,8 +153,15 @@ function FocusTimerPanel() {
       type: "success",
       duration: 6000,
     });
-  }, [timer.remainingSeconds, isRunning, activeTask, showToast]);
-
+  }, [
+    timer.remainingSeconds,
+    timer.durationMinutes,
+    timer.selectedTaskId,
+    isRunning,
+    activeTask,
+    showToast,
+    addFocusSession,
+  ]);
   function handleStartPause() {
     if (timer.remainingSeconds === 0) {
       setTimer((previousTimer) => ({
@@ -225,7 +240,9 @@ function FocusTimerPanel() {
               className="focus-timer-primary-button"
               onClick={handleStartPause}
             >
-              <i className={`bi ${isRunning ? "bi-pause-fill" : "bi-play-fill"}`}></i>
+              <i
+                className={`bi ${isRunning ? "bi-pause-fill" : "bi-play-fill"}`}
+              ></i>
               {isRunning ? "Pauziraj" : "Pokreni fokus"}
             </button>
 
@@ -265,10 +282,7 @@ function FocusTimerPanel() {
           <label className="focus-timer-task-select">
             <span>Na čemu radiš?</span>
 
-            <select
-              value={timer.selectedTaskId}
-              onChange={handleTaskChange}
-            >
+            <select value={timer.selectedTaskId} onChange={handleTaskChange}>
               <option value="">Opšti fokus / učenje</option>
 
               {activeTasks.map((task) => (
@@ -285,7 +299,9 @@ function FocusTimerPanel() {
             <div>
               <span>AKTIVNI FOKUS</span>
               <strong>
-                {activeTask ? activeTask.title : "Izaberi obavezu ili uči opšte gradivo"}
+                {activeTask
+                  ? activeTask.title
+                  : "Izaberi obavezu ili uči opšte gradivo"}
               </strong>
             </div>
           </div>

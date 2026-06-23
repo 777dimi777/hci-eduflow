@@ -15,6 +15,7 @@ import { MaterialProvider } from "./context/MaterialContext";
 import { ExamScheduleProvider } from "./context/ExamScheduleContext";
 import { ToastProvider } from "./context/ToastContext";
 import { PreferencesProvider } from "./context/PreferencesContext";
+import { FocusHistoryProvider } from "./context/FocusHistoryContext";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
@@ -27,7 +28,9 @@ createRoot(document.getElementById("root")).render(
                   <ExamScheduleProvider>
                     <ToastProvider>
                       <PreferencesProvider>
-                        <App />
+                        <FocusHistoryProvider>
+                          <App />
+                        </FocusHistoryProvider>
                       </PreferencesProvider>
                     </ToastProvider>
                   </ExamScheduleProvider>

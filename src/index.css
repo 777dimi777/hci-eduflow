@@ -9674,3 +9674,214 @@ html.eduflow-enhanced-focus :focus-visible {
     grid-column: 1 / -1;
   }
 }
+.focus-consistency-panel {
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.12);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(251, 146, 60, 0.09),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(20, 34, 27, 0.96),
+      rgba(11, 22, 16, 0.97)
+    );
+}
+
+.focus-consistency-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.focus-consistency-heading h2 {
+  margin: 0 0 7px;
+  color: #eff9f1;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.focus-consistency-heading p:not(.page-eyebrow) {
+  margin: 0;
+  color: #8fa198;
+  font-size: 0.78rem;
+}
+
+.focus-consistency-streak {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  border: 1px solid rgba(251, 146, 60, 0.2);
+  border-radius: 13px;
+  background: rgba(251, 146, 60, 0.08);
+}
+
+.focus-consistency-streak > i {
+  color: #fdba74;
+  font-size: 1.2rem;
+}
+
+.focus-consistency-streak > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.focus-consistency-streak strong {
+  color: #fde4c7;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.focus-consistency-streak span {
+  margin-top: 3px;
+  color: #c4a68d;
+  font-size: 0.63rem;
+}
+
+.focus-consistency-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.focus-consistency-summary article {
+  display: flex;
+  min-height: 94px;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 21px;
+  border-right: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.focus-consistency-summary article:last-child {
+  border-right: 0;
+}
+
+.focus-consistency-summary span {
+  color: #8fa198;
+  font-size: 0.69rem;
+}
+
+.focus-consistency-summary strong {
+  margin: 5px 0 3px;
+  color: #eff9f1;
+  font-size: 1.35rem;
+  font-weight: 820;
+}
+
+.focus-consistency-summary small {
+  color: #7e9284;
+  font-size: 0.65rem;
+}
+
+.focus-consistency-chart {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  min-height: 190px;
+  align-items: end;
+  padding: 21px;
+}
+
+.focus-consistency-day {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.focus-consistency-value {
+  min-height: 17px;
+  color: #708276;
+  font-size: 0.62rem;
+  font-weight: 720;
+}
+
+.focus-consistency-bar-area {
+  display: flex;
+  width: 100%;
+  height: 100px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.focus-consistency-bar {
+  width: min(31px, 65%);
+  min-height: 7px;
+  border-radius: 8px 8px 3px 3px;
+  background: rgba(134, 239, 172, 0.12);
+  transition: height 0.25s ease;
+}
+
+.focus-consistency-day-active .focus-consistency-bar {
+  background: linear-gradient(180deg, #86efac, #22c55e);
+  box-shadow: 0 0 15px rgba(74, 222, 128, 0.24);
+}
+
+.focus-consistency-day strong {
+  color: #c6d7ca;
+  font-size: 0.67rem;
+}
+
+.focus-consistency-day small {
+  overflow: hidden;
+  max-width: 100%;
+  color: #788b7d;
+  font-size: 0.6rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.focus-consistency-empty-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0 21px 20px;
+  color: #8da094;
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.focus-consistency-empty-message i {
+  color: #fde68a;
+}
+
+@media (max-width: 700px) {
+  .focus-consistency-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .focus-consistency-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .focus-consistency-summary article {
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+  }
+
+  .focus-consistency-summary article:last-child {
+    border-bottom: 0;
+  }
+
+  .focus-consistency-chart {
+    gap: 5px;
+    padding: 18px 12px;
+  }
+
+  .focus-consistency-day small {
+    display: none;
+  }
+}
