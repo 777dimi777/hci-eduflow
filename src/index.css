@@ -5878,3 +5878,377 @@ p {
     width: 100%;
   }
 }
+.weekly-workload-panel {
+  margin-top: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.1);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(74, 222, 128, 0.1),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(20, 34, 27, 0.96),
+      rgba(11, 22, 16, 0.97)
+    );
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.weekly-workload-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.weekly-workload-heading h2 {
+  margin: 0 0 7px;
+  color: #eff9f1;
+  font-size: 1.08rem;
+  font-weight: 790;
+}
+
+.weekly-workload-heading p:not(.page-eyebrow) {
+  margin: 0;
+  color: #8fa198;
+  font-size: 0.8rem;
+}
+
+.weekly-workload-total {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 0 11px;
+  border: 1px solid rgba(74, 222, 128, 0.18);
+  border-radius: 999px;
+  background: rgba(74, 222, 128, 0.09);
+  color: #92efae;
+  font-size: 0.73rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.weekly-workload-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(310px, 0.7fr);
+  min-height: 330px;
+}
+
+.weekly-workload-chart {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(64px, 1fr));
+  gap: 10px;
+  padding: 22px;
+  border-right: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.weekly-workload-day {
+  display: flex;
+  min-height: 250px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 7px;
+  padding: 11px 7px;
+  border: 1px solid rgba(134, 239, 172, 0.08);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.018);
+  color: #dcebe0;
+  cursor: pointer;
+  transition: 0.18s ease;
+}
+
+.weekly-workload-day:hover {
+  border-color: rgba(74, 222, 128, 0.3);
+  background: rgba(74, 222, 128, 0.06);
+  transform: translateY(-3px);
+}
+
+.weekly-workload-day-selected {
+  border-color: rgba(74, 222, 128, 0.45);
+  background: rgba(74, 222, 128, 0.09);
+  box-shadow: 0 0 18px rgba(74, 222, 128, 0.08);
+}
+
+.weekly-workload-day-today {
+  box-shadow: inset 0 3px #4ade80;
+}
+
+.weekly-workload-day-label {
+  color: #91a398;
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.weekly-workload-day strong {
+  color: #eef8f0;
+  font-size: 0.94rem;
+}
+
+.weekly-workload-bar-track {
+  display: flex;
+  width: 100%;
+  height: 126px;
+  align-items: flex-end;
+  overflow: hidden;
+  border-radius: 9px;
+  background: rgba(134, 239, 172, 0.07);
+}
+
+.weekly-workload-bar-track span {
+  width: 100%;
+  min-height: 5px;
+  border-radius: 8px 8px 0 0;
+  background: linear-gradient(180deg, #86efac, #22c55e);
+  box-shadow: 0 0 16px rgba(74, 222, 128, 0.28);
+  transition: height 0.3s ease;
+}
+
+.weekly-workload-day small {
+  color: #819388;
+  font-size: 0.64rem;
+  text-align: center;
+}
+
+.weekly-workload-details {
+  padding: 22px;
+}
+
+.weekly-workload-details-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.weekly-workload-details-heading h3 {
+  margin: 4px 0 0;
+  color: #eff9f1;
+  font-size: 1rem;
+  font-weight: 790;
+  text-transform: capitalize;
+}
+
+.weekly-workload-details-heading > span {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(74, 222, 128, 0.1);
+  color: #91efac;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.weekly-workload-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 15px;
+}
+
+.weekly-workload-task {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.weekly-workload-task::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: var(--subject-color);
+  content: '';
+}
+
+.weekly-workload-task-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: var(--subject-color);
+  box-shadow: 0 0 11px var(--subject-color);
+}
+
+.weekly-workload-task > div {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.weekly-workload-task small {
+  overflow: hidden;
+  color: #8da196;
+  font-size: 0.68rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.weekly-workload-task strong {
+  color: #edf8ef;
+  font-size: 0.8rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.weekly-workload-task p {
+  margin: 2px 0 0;
+  color: #7e9184;
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.weekly-workload-priority {
+  display: inline-flex;
+  height: 24px;
+  align-items: center;
+  padding: 0 7px;
+  border-radius: 999px;
+  font-size: 0.63rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.weekly-workload-priority-high {
+  background: rgba(251, 113, 133, 0.1);
+  color: #fda4af;
+}
+
+.weekly-workload-priority-medium {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fde68a;
+}
+
+.weekly-workload-priority-low {
+  background: rgba(74, 222, 128, 0.1);
+  color: #86efac;
+}
+
+.weekly-workload-empty {
+  display: flex;
+  min-height: 210px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 9px;
+  text-align: center;
+}
+
+.weekly-workload-empty i {
+  color: #78e99d;
+  font-size: 1.7rem;
+}
+
+.weekly-workload-empty h3 {
+  margin: 0;
+  color: #eff9f1;
+  font-size: 0.94rem;
+}
+
+.weekly-workload-empty p {
+  max-width: 270px;
+  margin: 0;
+  color: #899b8f;
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
+
+.weekly-overdue-alert,
+.weekly-workload-success {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 22px;
+  border-top: 1px solid rgba(134, 239, 172, 0.08);
+  font-size: 0.77rem;
+}
+
+.weekly-overdue-alert {
+  background: rgba(251, 113, 133, 0.06);
+  color: #fbc0c9;
+}
+
+.weekly-overdue-alert > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.weekly-overdue-alert i {
+  color: #fb7185;
+}
+
+.weekly-overdue-alert p {
+  margin: 0;
+  color: #d4a9af;
+}
+
+.weekly-workload-success {
+  justify-content: flex-start;
+  background: rgba(74, 222, 128, 0.04);
+  color: #93edac;
+}
+
+.weekly-workload-success i {
+  color: #70e897;
+}
+
+@media (max-width: 1100px) {
+  .weekly-workload-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .weekly-workload-chart {
+    border-right: 0;
+    border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+  }
+}
+
+@media (max-width: 680px) {
+  .weekly-workload-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .weekly-workload-chart {
+    gap: 6px;
+    padding: 14px;
+    overflow-x: auto;
+  }
+
+  .weekly-workload-day {
+    min-width: 62px;
+    min-height: 210px;
+  }
+
+  .weekly-workload-details {
+    padding: 18px;
+  }
+
+  .weekly-overdue-alert {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px 18px;
+  }
+}

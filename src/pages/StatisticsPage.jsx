@@ -8,7 +8,7 @@ import {
   formatAverage,
 } from '../utils/gradeUtils'
 import { getSubjectColorValue } from '../utils/subjectColorUtils'
-
+import WeeklyWorkloadPanel from '../components/WeeklyWorkloadPanel'
 function StatisticsPage() {
   const { subjects } = useSubjects()
   const { tasks } = useTasks()
@@ -339,8 +339,10 @@ function StatisticsPage() {
               </>
             )}
           </section>
-        </aside>
+               </aside>
       </div>
+
+      <WeeklyWorkloadPanel />
     </section>
   )
 }
