@@ -5467,3 +5467,33 @@ p {
   background: rgba(74, 222, 128, 0.06);
   color: #80ca95;
 }
+.exam-subject-link-cell {
+  display: flex;
+  min-width: 180px;
+  align-items: center;
+  gap: 8px;
+}
+
+.exam-subject-link-dot {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 11px currentColor;
+}
+
+.exam-subject-link-cell select {
+  width: 100%;
+  min-height: 35px;
+  padding: 0 8px;
+  border: 1px solid rgba(134, 239, 172, 0.11);
+  border-radius: 8px;
+  outline: 0;
+  background: rgba(255, 255, 255, 0.025);
+  color: #e6f4e9;
+  font-size: 0.74rem;
+}
+
+.exam-subject-link-cell select:focus {
+  border-color: rgba(74, 222, 128, 0.5);
+}

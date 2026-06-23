@@ -4,8 +4,12 @@ import {
   createEmptyExamEntry,
   extractPdfRows,
   parseExamScheduleRows,
+  findMatchingSubjectForEntry,
 } from "../utils/examSchedulePdfUtils";
 import ScheduleCalendarButton from "../components/ScheduleCalendarButton";
+import { useSubjects } from "../context/SubjectContext";
+import { useTasks } from "../context/TaskContext";
+import { getSubjectColorValue } from "../utils/subjectColorUtils";
 const defaultProfile = {
   level: "OAS",
   accreditation: "2019",
@@ -56,7 +60,8 @@ function PdfImportPage() {
   const [scheduleTitle, setScheduleTitle] = useState("");
   const [profile, setProfile] = useState(defaultProfile);
   const [accentColor, setAccentColor] = useState(accentOptions[0]);
-
+  const { subjects } = useSubjects();
+  const { updateExamTaskSubject } = useTasks();
   const [candidateEntries, setCandidateEntries] = useState([]);
   const [extractedPdf, setExtractedPdf] = useState(null);
 
@@ -276,7 +281,39 @@ function PdfImportPage() {
 
     deleteScheduleEntry(selectedSchedule.id, entryId);
   }
+  function getLinkedSubject(entry) {
+    const manuallySelectedSubject = subjects.find(
+      (subject) => Number(subject.id) === Number(entry.subjectId),
+    );
 
+    return (
+      manuallySelectedSubject || findMatchingSubjectForEntry(subjects, entry)
+    );
+  }
+
+  function handleSavedSubjectLinkChange(entry, subjectId) {
+    if (!selectedSchedule) {
+      return;
+    }
+
+    updateScheduleEntry(selectedSchedule.id, entry.id, "subjectId", subjectId);
+
+    updateExamTaskSubject({
+      scheduleId: selectedSchedule.id,
+      scheduleEntryId: entry.id,
+      subjectId,
+    });
+
+    const linkedSubject = subjects.find(
+      (subject) => Number(subject.id) === Number(subjectId),
+    );
+
+    if (linkedSubject) {
+      setFeedback(
+        `Ispit „${entry.subjectName}“ je povezan sa predmetom ${linkedSubject.code}.`,
+      );
+    }
+  }
   return (
     <section className="exam-schedule-page">
       <div className="dashboard-heading">
@@ -528,7 +565,6 @@ function PdfImportPage() {
                     <th>Sale</th>
                     <th>Sem.</th>
                     <th>Modul</th>
-                    <th>Kalendar</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -653,13 +689,6 @@ function PdfImportPage() {
                               event.target.value,
                             )
                           }
-                        />
-                      </td>
-                      <td>
-                        <ScheduleCalendarButton
-                          schedule={selectedSchedule}
-                          entry={entry}
-                          onFeedback={setFeedback}
                         />
                       </td>
                       <td>
@@ -811,6 +840,8 @@ function PdfImportPage() {
                       <th>Sale</th>
                       <th>Sem.</th>
                       <th>Modul</th>
+                      <th>Povezan predmet</th>
+                      <th>Kalendar</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -930,7 +961,50 @@ function PdfImportPage() {
                             }
                           />
                         </td>
+                        <td>
+                          <div className="exam-subject-link-cell">
+                            <span
+                              className="exam-subject-link-dot"
+                              style={{
+                                backgroundColor: getLinkedSubject(entry)
+                                  ? getSubjectColorValue(
+                                      getLinkedSubject(entry).color,
+                                    )
+                                  : "#64748b",
+                              }}
+                            ></span>
 
+                            <select
+                              value={entry.subjectId || ""}
+                              onChange={(event) =>
+                                handleSavedSubjectLinkChange(
+                                  entry,
+                                  event.target.value,
+                                )
+                              }
+                            >
+                              <option value="">
+                                {getLinkedSubject(entry)
+                                  ? `Automatski: ${getLinkedSubject(entry).code}`
+                                  : "Nije povezan"}
+                              </option>
+
+                              {subjects.map((subject) => (
+                                <option key={subject.id} value={subject.id}>
+                                  {subject.code} — {subject.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </td>
+
+                        <td>
+                          <ScheduleCalendarButton
+                            schedule={selectedSchedule}
+                            entry={entry}
+                            onFeedback={setFeedback}
+                          />
+                        </td>
                         <td>
                           <button
                             type="button"

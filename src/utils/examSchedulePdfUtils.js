@@ -507,3 +507,30 @@ export function createEmptyExamEntry(profile) {
     rooms: '',
   }
 }
+export function findMatchingSubjectForEntry(subjects, entry) {
+  if (!entry) {
+    return null
+  }
+
+  const normalizedEntryCode = normalizeCourseCode(entry.courseCode)
+  const normalizedEntryName = normalizeText(entry.subjectName)
+
+  return subjects.find((subject) => {
+    const normalizedSubjectCode = normalizeCourseCode(subject.code)
+    const normalizedSubjectName = normalizeText(subject.name)
+
+    const sameCode =
+      normalizedEntryCode &&
+      normalizedSubjectCode &&
+      normalizedEntryCode === normalizedSubjectCode
+
+    const sameName =
+      normalizedEntryName &&
+      normalizedSubjectName &&
+      (normalizedEntryName === normalizedSubjectName ||
+        normalizedEntryName.includes(normalizedSubjectName) ||
+        normalizedSubjectName.includes(normalizedEntryName))
+
+    return sameCode || sameName
+  })
+}
