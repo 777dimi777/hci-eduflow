@@ -9293,3 +9293,229 @@ html.eduflow-enhanced-focus :focus-visible {
     display: none;
   }
 }
+.getting-started-panel {
+  margin: 20px 0;
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.14);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 92% 10%, rgba(251, 191, 36, 0.08), transparent 26%),
+    linear-gradient(145deg, rgba(20, 34, 27, 0.97), rgba(11, 22, 16, 0.98));
+}
+
+.getting-started-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 22px 16px;
+}
+
+.getting-started-heading h2 {
+  margin: 0 0 7px;
+  color: #eff9f1;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.getting-started-heading p:not(.page-eyebrow) {
+  max-width: 720px;
+  margin: 0;
+  color: #8fa198;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.getting-started-dismiss-button {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #8fa198;
+  cursor: pointer;
+}
+
+.getting-started-dismiss-button:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #eff9f1;
+}
+
+.getting-started-progress-row {
+  padding: 0 22px 19px;
+}
+
+.getting-started-progress-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.getting-started-progress-label span {
+  color: #90a397;
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.getting-started-progress-label strong {
+  color: #9cf0b7;
+  font-size: 0.72rem;
+}
+
+.getting-started-progress-track {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(134, 239, 172, 0.09);
+}
+
+.getting-started-progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4ade80, #86efac);
+  box-shadow: 0 0 14px rgba(74, 222, 128, 0.55);
+  transition: width 0.28s ease;
+}
+
+.getting-started-step-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.getting-started-step {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 12px;
+  padding: 17px;
+  border-right: 1px solid rgba(134, 239, 172, 0.08);
+  transition: 0.18s ease;
+}
+
+.getting-started-step:last-child {
+  border-right: 0;
+}
+
+.getting-started-step:hover {
+  background: rgba(74, 222, 128, 0.035);
+}
+
+.getting-started-step-completed {
+  background: rgba(74, 222, 128, 0.035);
+}
+
+.getting-started-step-icon {
+  display: grid;
+  width: 37px;
+  height: 37px;
+  place-items: center;
+  border-radius: 11px;
+  background: rgba(251, 191, 36, 0.1);
+  color: #fde68a;
+  font-size: 0.92rem;
+}
+
+.getting-started-step-completed .getting-started-step-icon {
+  background: rgba(74, 222, 128, 0.12);
+  color: #86efac;
+}
+
+.getting-started-step-content {
+  display: flex;
+  min-height: 76px;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.getting-started-step-content strong {
+  color: #eaf5ed;
+  font-size: 0.77rem;
+  font-weight: 800;
+}
+
+.getting-started-step-content span {
+  color: #84978a;
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+
+.getting-started-step-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  color: #9cf0b7;
+  font-size: 0.69rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.getting-started-step-link:hover {
+  color: #d3f9dd;
+}
+
+.getting-started-tip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 13px 22px;
+  border-top: 1px solid rgba(134, 239, 172, 0.08);
+  color: #9aac9f;
+  font-size: 0.71rem;
+}
+
+.getting-started-tip i {
+  color: #fde68a;
+}
+
+@media (max-width: 1180px) {
+  .getting-started-step-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .getting-started-step {
+    border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+  }
+
+  .getting-started-step:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .getting-started-step:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 650px) {
+  .getting-started-heading {
+    padding: 18px 16px 14px;
+  }
+
+  .getting-started-progress-row,
+  .getting-started-tip {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .getting-started-step-list {
+    grid-template-columns: 1fr;
+  }
+
+  .getting-started-step,
+  .getting-started-step:nth-child(2n) {
+    min-height: auto;
+    border-right: 0;
+  }
+
+  .getting-started-step-content {
+    min-height: 0;
+  }
+}

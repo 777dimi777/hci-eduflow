@@ -9,7 +9,7 @@ import DailyLoadInsight from "../components/DailyLoadInsight";
 import FocusTimerPanel from "../components/FocusTimerPanel";
 import UpcomingDeadlinesPanel from "../components/UpcomingDeadlinesPanel";
 import DataBackupPanel from "../components/DataBackupPanel";
-
+import GettingStartedPanel from "../components/GettingStartedPanel";
 
 function DashboardPage() {
   const { subjects } = useSubjects();
@@ -172,6 +172,7 @@ function DashboardPage() {
           </Link>
         </section>
       </div>
+      <GettingStartedPanel />
       <DailyFocusPanel />
       <DailyLoadInsight />
       <FocusTimerPanel />
