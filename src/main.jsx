@@ -14,6 +14,7 @@ import { GradeGoalProvider } from "./context/GradeGoalContext";
 import { MaterialProvider } from "./context/MaterialContext";
 import { ExamScheduleProvider } from "./context/ExamScheduleContext";
 import { ToastProvider } from "./context/ToastContext";
+import { PreferencesProvider } from "./context/PreferencesContext";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
@@ -25,7 +26,9 @@ createRoot(document.getElementById("root")).render(
                 <MaterialProvider>
                   <ExamScheduleProvider>
                     <ToastProvider>
-                      <App />
+                      <PreferencesProvider>
+                        <App />
+                      </PreferencesProvider>
                     </ToastProvider>
                   </ExamScheduleProvider>
                 </MaterialProvider>

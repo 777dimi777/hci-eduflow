@@ -12,6 +12,7 @@ import MaterialsPage from "./pages/MaterialsPage";
 import PdfImportPage from "./pages/PdfImportPage";
 import StatisticsPage from "./pages/StatisticsPage";
 import SubjectDetailsPage from "./pages/SubjectDetailsPage";
+import SettingsPage from "./pages/SettingsPage";
 function App() {
   return (
     <Routes>
@@ -26,22 +27,9 @@ function App() {
         <Route path="/exams" element={<PassedExamsPage />} />
         <Route path="/grade-goal" element={<GradeGoalPage />} />
         <Route path="/materials" element={<MaterialsPage />} />
-
         <Route path="/statistics" element={<StatisticsPage />} />
-
         <Route path="/pdf-import" element={<PdfImportPage />} />
-
-        <Route
-          path="/settings"
-          element={
-            <SectionPage
-              title="Podešavanja"
-              description="Ovde će korisnik menjati temu, boje i podešavanja aplikacije."
-              icon="bi-gear"
-            />
-          }
-        />
-
+        <Route path="/settings" element={<SettingsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

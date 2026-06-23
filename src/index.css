@@ -8662,3 +8662,329 @@ p {
     flex: 1;
   }
 }
+html.eduflow-larger-text {
+  font-size: 17px;
+}
+
+html.eduflow-reduced-motion *,
+html.eduflow-reduced-motion *::before,
+html.eduflow-reduced-motion *::after {
+  scroll-behavior: auto !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+html.eduflow-enhanced-focus :focus-visible {
+  outline: 3px solid #fde68a !important;
+  outline-offset: 4px;
+}
+
+.settings-page {
+  animation: settings-page-enter 0.3s ease both;
+}
+
+@keyframes settings-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settings-accessibility-panel,
+.settings-keyboard-card {
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.12);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 92% 10%,
+      rgba(56, 189, 248, 0.08),
+      transparent 26%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(20, 34, 27, 0.96),
+      rgba(11, 22, 16, 0.97)
+    );
+}
+
+.settings-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 23px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.settings-panel-heading h2 {
+  margin: 0 0 7px;
+  color: #eff9f1;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.settings-panel-heading p:not(.page-eyebrow) {
+  max-width: 670px;
+  margin: 0;
+  color: #8fa198;
+  font-size: 0.79rem;
+  line-height: 1.6;
+}
+
+.settings-panel-heading-icon {
+  display: grid;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(56, 189, 248, 0.11);
+  color: #7dd3fc;
+  font-size: 1.35rem;
+}
+
+.settings-preference-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-preference-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 19px 23px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.07);
+  transition: 0.18s ease;
+}
+
+.settings-preference-row:hover {
+  background: rgba(74, 222, 128, 0.035);
+}
+
+.settings-preference-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 13px;
+  font-size: 1rem;
+}
+
+.settings-motion-icon {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fde68a;
+}
+
+.settings-text-icon {
+  background: rgba(56, 189, 248, 0.11);
+  color: #7dd3fc;
+}
+
+.settings-focus-icon {
+  background: rgba(74, 222, 128, 0.11);
+  color: #86efac;
+}
+
+.settings-preference-content h3 {
+  margin: 0 0 5px;
+  color: #edf8ef;
+  font-size: 0.88rem;
+  font-weight: 790;
+}
+
+.settings-preference-content p {
+  max-width: 600px;
+  margin: 0;
+  color: #8b9e90;
+  font-size: 0.74rem;
+  line-height: 1.55;
+}
+
+.settings-toggle {
+  display: flex;
+  min-width: 112px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.settings-toggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.settings-toggle > span {
+  position: relative;
+  width: 39px;
+  height: 23px;
+  flex-shrink: 0;
+  border: 1px solid rgba(134, 239, 172, 0.15);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  transition: 0.18s ease;
+}
+
+.settings-toggle > span::after {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #9bad9f;
+  content: "";
+  transition: 0.18s ease;
+}
+
+.settings-toggle input:checked + span {
+  border-color: rgba(134, 239, 172, 0.3);
+  background: rgba(74, 222, 128, 0.2);
+}
+
+.settings-toggle input:checked + span::after {
+  transform: translateX(16px);
+  background: #9cf0b7;
+}
+
+.settings-toggle em {
+  width: 64px;
+  color: #90a397;
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 740;
+  text-align: right;
+}
+
+.settings-reset-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 18px 23px;
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.settings-reset-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings-reset-row strong {
+  color: #dfeee3;
+  font-size: 0.78rem;
+}
+
+.settings-reset-row span {
+  color: #84978a;
+  font-size: 0.7rem;
+}
+
+.settings-reset-button {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 12px;
+  border: 1px solid rgba(251, 113, 133, 0.22);
+  border-radius: 9px;
+  background: rgba(251, 113, 133, 0.07);
+  color: #fdb2bc;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 800;
+  transition: 0.18s ease;
+}
+
+.settings-reset-button:hover {
+  background: rgba(251, 113, 133, 0.15);
+  transform: translateY(-1px);
+}
+
+.settings-keyboard-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-top: 18px;
+  padding: 21px;
+}
+
+.settings-keyboard-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(251, 191, 36, 0.1);
+  color: #fde68a;
+  font-size: 1.1rem;
+}
+
+.settings-keyboard-card h2 {
+  margin: 6px 0 7px;
+  color: #eff9f1;
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.settings-keyboard-card p:not(.page-eyebrow) {
+  max-width: 720px;
+  margin: 0;
+  color: #8ea196;
+  font-size: 0.76rem;
+  line-height: 1.65;
+}
+
+.settings-keyboard-card kbd {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  padding: 0 6px;
+  border: 1px solid rgba(134, 239, 172, 0.16);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.055);
+  color: #d8e9dc;
+  font-family: inherit;
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+
+@media (max-width: 700px) {
+  .settings-panel-heading {
+    align-items: flex-start;
+  }
+
+  .settings-preference-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 17px;
+  }
+
+  .settings-toggle {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
+
+  .settings-reset-row {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 17px;
+  }
+
+  .settings-keyboard-card {
+    padding: 18px;
+  }
+}
