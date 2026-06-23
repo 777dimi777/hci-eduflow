@@ -13,8 +13,10 @@ import PdfImportPage from "./pages/PdfImportPage";
 import StatisticsPage from "./pages/StatisticsPage";
 import SubjectDetailsPage from "./pages/SubjectDetailsPage";
 import SettingsPage from "./pages/SettingsPage";
+import QuickCommandPalette from "./components/QuickCommandPalette";
 function App() {
   return (
+    <>
     <Routes>
       <Route element={<AppLayout />}>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -33,6 +35,8 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
+    <QuickCommandPalette />
+    </>
   );
 }
 
