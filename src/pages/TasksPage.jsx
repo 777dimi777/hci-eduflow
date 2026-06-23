@@ -11,6 +11,44 @@ const priorityLabels = {
   low: 'Nizak',
 }
 
+const priorityOrder = {
+  high: 1,
+  medium: 2,
+  low: 3,
+}
+
+const statusOrder = {
+  todo: 1,
+  'in-progress': 2,
+  done: 3,
+}
+
+function SortableHeader({ label, sortKey, sortConfig, onSort }) {
+  const isActive = sortConfig.key === sortKey
+
+  let iconClass = 'bi-arrow-down-up'
+
+  if (isActive && sortConfig.direction === 'asc') {
+    iconClass = 'bi-arrow-up'
+  }
+
+  if (isActive && sortConfig.direction === 'desc') {
+    iconClass = 'bi-arrow-down'
+  }
+
+  return (
+    <button
+      type="button"
+      className={`sortable-header ${isActive ? 'sortable-header-active' : ''}`}
+      onClick={() => onSort(sortKey)}
+      title={`Sortiraj po koloni: ${label}`}
+    >
+      <span>{label}</span>
+      <i className={`bi ${iconClass}`}></i>
+    </button>
+  )
+}
+
 function TasksPage() {
   const { subjects } = useSubjects()
   const { tasks, addTask, updateTaskStatus, deleteTask } = useTasks()
@@ -21,6 +59,11 @@ function TasksPage() {
   const [selectedPriority, setSelectedPriority] = useState('all')
   const [showForm, setShowForm] = useState(false)
 
+  const [sortConfig, setSortConfig] = useState({
+    key: 'dueDate',
+    direction: 'asc',
+  })
+
   const subjectMap = useMemo(() => {
     return new Map(subjects.map((subject) => [subject.id, subject]))
   }, [subjects])
@@ -28,44 +71,89 @@ function TasksPage() {
   const filteredTasks = useMemo(() => {
     const normalizedSearch = searchTerm.trim().toLowerCase()
 
-    return tasks
-      .filter((task) => {
-        const subject = subjectMap.get(task.subjectId)
+    const matchingTasks = tasks.filter((task) => {
+      const subject = subjectMap.get(task.subjectId)
 
-        const matchesSearch =
-          task.title.toLowerCase().includes(normalizedSearch) ||
-          task.notes.toLowerCase().includes(normalizedSearch) ||
-          subject?.name.toLowerCase().includes(normalizedSearch) ||
-          subject?.code.toLowerCase().includes(normalizedSearch)
+      const matchesSearch =
+        task.title.toLowerCase().includes(normalizedSearch) ||
+        task.notes.toLowerCase().includes(normalizedSearch) ||
+        subject?.name.toLowerCase().includes(normalizedSearch) ||
+        subject?.code.toLowerCase().includes(normalizedSearch)
 
-        const matchesSubject =
-          selectedSubject === 'all' ||
-          task.subjectId === Number(selectedSubject)
+      const matchesSubject =
+        selectedSubject === 'all' ||
+        task.subjectId === Number(selectedSubject)
 
-        const matchesStatus =
-          selectedStatus === 'all' || task.status === selectedStatus
+      const matchesStatus =
+        selectedStatus === 'all' || task.status === selectedStatus
 
-        const matchesPriority =
-          selectedPriority === 'all' || task.priority === selectedPriority
+      const matchesPriority =
+        selectedPriority === 'all' || task.priority === selectedPriority
 
-        return (
-          matchesSearch &&
-          matchesSubject &&
-          matchesStatus &&
-          matchesPriority
-        )
-      })
-      .sort((firstTask, secondTask) =>
-        firstTask.dueDate.localeCompare(secondTask.dueDate)
+      return (
+        matchesSearch &&
+        matchesSubject &&
+        matchesStatus &&
+        matchesPriority
       )
+    })
+
+    return matchingTasks.sort((firstTask, secondTask) => {
+      let firstValue
+      let secondValue
+
+      if (sortConfig.key === 'title') {
+        firstValue = firstTask.title
+        secondValue = secondTask.title
+      } else if (sortConfig.key === 'subject') {
+        firstValue = subjectMap.get(firstTask.subjectId)?.name || ''
+        secondValue = subjectMap.get(secondTask.subjectId)?.name || ''
+      } else if (sortConfig.key === 'dueDate') {
+        firstValue = firstTask.dueDate
+        secondValue = secondTask.dueDate
+      } else if (sortConfig.key === 'priority') {
+        firstValue = priorityOrder[firstTask.priority]
+        secondValue = priorityOrder[secondTask.priority]
+      } else {
+        firstValue = statusOrder[firstTask.status]
+        secondValue = statusOrder[secondTask.status]
+      }
+
+      let comparison
+
+      if (typeof firstValue === 'number') {
+        comparison = firstValue - secondValue
+      } else {
+        comparison = firstValue.localeCompare(secondValue, 'sr')
+      }
+
+      return sortConfig.direction === 'asc' ? comparison : -comparison
+    })
   }, [
     tasks,
     searchTerm,
     selectedSubject,
     selectedStatus,
     selectedPriority,
+    sortConfig,
     subjectMap,
   ])
+
+  function handleSort(sortKey) {
+    setSortConfig((previousConfig) => {
+      if (previousConfig.key === sortKey) {
+        return {
+          key: sortKey,
+          direction: previousConfig.direction === 'asc' ? 'desc' : 'asc',
+        }
+      }
+
+      return {
+        key: sortKey,
+        direction: 'asc',
+      }
+    })
+  }
 
   function handleAddTask(newTask) {
     addTask(newTask)
@@ -165,7 +253,8 @@ function TasksPage() {
 
       <p className="tasks-summary">
         Prikazano: <strong>{filteredTasks.length}</strong> od{' '}
-        <strong>{tasks.length}</strong> obaveza
+        <strong>{tasks.length}</strong> obaveza. Klikni na naziv kolone za
+        sortiranje.
       </p>
 
       {filteredTasks.length > 0 ? (
@@ -174,11 +263,51 @@ function TasksPage() {
             <table className="tasks-table">
               <thead>
                 <tr>
-                  <th>Obaveza</th>
-                  <th>Predmet</th>
-                  <th>Rok</th>
-                  <th>Prioritet</th>
-                  <th>Status</th>
+                  <th>
+                    <SortableHeader
+                      label="Obaveza"
+                      sortKey="title"
+                      sortConfig={sortConfig}
+                      onSort={handleSort}
+                    />
+                  </th>
+
+                  <th>
+                    <SortableHeader
+                      label="Predmet"
+                      sortKey="subject"
+                      sortConfig={sortConfig}
+                      onSort={handleSort}
+                    />
+                  </th>
+
+                  <th>
+                    <SortableHeader
+                      label="Rok"
+                      sortKey="dueDate"
+                      sortConfig={sortConfig}
+                      onSort={handleSort}
+                    />
+                  </th>
+
+                  <th>
+                    <SortableHeader
+                      label="Prioritet"
+                      sortKey="priority"
+                      sortConfig={sortConfig}
+                      onSort={handleSort}
+                    />
+                  </th>
+
+                  <th>
+                    <SortableHeader
+                      label="Status"
+                      sortKey="status"
+                      sortConfig={sortConfig}
+                      onSort={handleSort}
+                    />
+                  </th>
+
                   <th className="task-actions-header">Akcije</th>
                 </tr>
               </thead>
