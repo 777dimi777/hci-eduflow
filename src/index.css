@@ -7796,7 +7796,11 @@ p {
   border-radius: 18px;
   background:
     radial-gradient(circle at 8% 15%, rgba(74, 222, 128, 0.1), transparent 24%),
-    radial-gradient(circle at 88% 88%, rgba(56, 189, 248, 0.07), transparent 25%),
+    radial-gradient(
+      circle at 88% 88%,
+      rgba(56, 189, 248, 0.07),
+      transparent 25%
+    ),
     linear-gradient(145deg, rgba(20, 34, 27, 0.96), rgba(11, 22, 16, 0.97));
 }
 
@@ -8095,7 +8099,11 @@ p {
   border: 1px solid rgba(134, 239, 172, 0.12);
   border-radius: 18px;
   background:
-    radial-gradient(circle at 93% 8%, rgba(56, 189, 248, 0.08), transparent 26%),
+    radial-gradient(
+      circle at 93% 8%,
+      rgba(56, 189, 248, 0.08),
+      transparent 26%
+    ),
     linear-gradient(145deg, rgba(20, 34, 27, 0.96), rgba(11, 22, 16, 0.97));
 }
 
@@ -8409,11 +8417,7 @@ p {
       rgba(56, 189, 248, 0.08),
       transparent 26%
     ),
-    linear-gradient(
-      145deg,
-      rgba(20, 34, 27, 0.96),
-      rgba(11, 22, 16, 0.97)
-    );
+    linear-gradient(145deg, rgba(20, 34, 27, 0.96), rgba(11, 22, 16, 0.97));
 }
 
 .data-backup-heading {
@@ -8707,11 +8711,7 @@ html.eduflow-enhanced-focus :focus-visible {
       rgba(56, 189, 248, 0.08),
       transparent 26%
     ),
-    linear-gradient(
-      145deg,
-      rgba(20, 34, 27, 0.96),
-      rgba(11, 22, 16, 0.97)
-    );
+    linear-gradient(145deg, rgba(20, 34, 27, 0.96), rgba(11, 22, 16, 0.97));
 }
 
 .settings-panel-heading {
@@ -9070,11 +9070,7 @@ html.eduflow-enhanced-focus :focus-visible {
       rgba(74, 222, 128, 0.11),
       transparent 29%
     ),
-    linear-gradient(
-      145deg,
-      rgba(23, 43, 30, 0.99),
-      rgba(8, 20, 13, 0.99)
-    );
+    linear-gradient(145deg, rgba(23, 43, 30, 0.99), rgba(8, 20, 13, 0.99));
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.5);
   animation: command-palette-enter 0.22s ease both;
 }
@@ -9299,7 +9295,11 @@ html.eduflow-enhanced-focus :focus-visible {
   border: 1px solid rgba(134, 239, 172, 0.14);
   border-radius: 18px;
   background:
-    radial-gradient(circle at 92% 10%, rgba(251, 191, 36, 0.08), transparent 26%),
+    radial-gradient(
+      circle at 92% 10%,
+      rgba(251, 191, 36, 0.08),
+      transparent 26%
+    ),
     linear-gradient(145deg, rgba(20, 34, 27, 0.97), rgba(11, 22, 16, 0.98));
 }
 
@@ -9535,11 +9535,7 @@ html.eduflow-enhanced-focus :focus-visible {
       color-mix(in srgb, var(--exam-color) 14%, transparent),
       transparent 29%
     ),
-    linear-gradient(
-      145deg,
-      rgba(20, 34, 27, 0.97),
-      rgba(11, 22, 16, 0.98)
-    );
+    linear-gradient(145deg, rgba(20, 34, 27, 0.97), rgba(11, 22, 16, 0.98));
 }
 
 .next-exam-icon {
@@ -9685,11 +9681,7 @@ html.eduflow-enhanced-focus :focus-visible {
       rgba(251, 146, 60, 0.09),
       transparent 28%
     ),
-    linear-gradient(
-      145deg,
-      rgba(20, 34, 27, 0.96),
-      rgba(11, 22, 16, 0.97)
-    );
+    linear-gradient(145deg, rgba(20, 34, 27, 0.96), rgba(11, 22, 16, 0.97));
 }
 
 .focus-consistency-heading {
@@ -9884,13 +9876,18 @@ html.eduflow-enhanced-focus :focus-visible {
   .focus-consistency-day small {
     display: none;
   }
-}.daily-reflection-panel {
+}
+.daily-reflection-panel {
   margin-top: 18px;
   overflow: hidden;
   border: 1px solid rgba(134, 239, 172, 0.12);
   border-radius: 18px;
   background:
-    radial-gradient(circle at 90% 8%, rgba(192, 132, 252, 0.08), transparent 28%),
+    radial-gradient(
+      circle at 90% 8%,
+      rgba(192, 132, 252, 0.08),
+      transparent 28%
+    ),
     linear-gradient(145deg, rgba(20, 34, 27, 0.96), rgba(11, 22, 16, 0.97));
 }
 
@@ -10149,5 +10146,290 @@ html.eduflow-enhanced-focus :focus-visible {
   .daily-reflection-completed-tasks {
     padding-right: 16px;
     padding-left: 16px;
+  }
+}
+.profile-preview-button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.topbar-profile-menu {
+  position: relative;
+}
+
+.student-profile-dropdown {
+  position: absolute;
+  z-index: 260;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 280px;
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.14);
+  border-radius: 14px;
+  background: linear-gradient(
+    145deg,
+    rgba(24, 43, 30, 0.99),
+    rgba(8, 20, 13, 0.99)
+  );
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.38);
+  animation: student-profile-dropdown-enter 0.18s ease both;
+}
+
+@keyframes student-profile-dropdown-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-7px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.student-profile-dropdown-heading {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 15px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.student-profile-large-avatar {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 13px;
+  background: rgba(74, 222, 128, 0.13);
+  color: #9cf0b7;
+  font-size: 0.95rem;
+  font-weight: 850;
+}
+
+.student-profile-dropdown-heading > div:last-child {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.student-profile-dropdown-heading strong {
+  overflow: hidden;
+  color: #eef9f0;
+  font-size: 0.79rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-profile-dropdown-heading span {
+  color: #8fa198;
+  font-size: 0.68rem;
+}
+
+.student-profile-dropdown-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 13px 15px;
+}
+
+.student-profile-dropdown-info span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #9bad9f;
+  font-size: 0.7rem;
+}
+
+.student-profile-dropdown-info i {
+  width: 14px;
+  color: #86efac;
+}
+
+.student-profile-edit-button {
+  display: flex;
+  width: calc(100% - 30px);
+  min-height: 37px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 0 15px 15px;
+  border: 1px solid rgba(134, 239, 172, 0.22);
+  border-radius: 9px;
+  background: rgba(74, 222, 128, 0.1);
+  color: #9cf0b7;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.student-profile-edit-button:hover {
+  background: rgba(74, 222, 128, 0.18);
+}
+
+.student-profile-modal-backdrop {
+  position: fixed;
+  z-index: 450;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(2, 10, 5, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.student-profile-modal {
+  width: min(620px, 100%);
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.16);
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    rgba(24, 43, 30, 0.99),
+    rgba(8, 20, 13, 0.99)
+  );
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.5);
+}
+
+.student-profile-modal-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 21px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.student-profile-modal-heading h2 {
+  margin: 0 0 7px;
+  color: #eff9f1;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.student-profile-modal-heading p:not(.page-eyebrow) {
+  margin: 0;
+  color: #8fa198;
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+.student-profile-modal-heading button {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #8fa198;
+  cursor: pointer;
+}
+
+.student-profile-modal-heading button:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #eff9f1;
+}
+
+.student-profile-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 21px;
+}
+
+.student-profile-form-grid label {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.student-profile-form-grid label:first-child {
+  grid-column: 1 / -1;
+}
+
+.student-profile-form-grid label span {
+  color: #a7baab;
+  font-size: 0.72rem;
+  font-weight: 760;
+}
+
+.student-profile-form-grid input {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 11px;
+  border: 1px solid rgba(134, 239, 172, 0.12);
+  border-radius: 9px;
+  outline: 0;
+  background: rgba(5, 15, 9, 0.55);
+  color: #eaf5ed;
+  font: inherit;
+  font-size: 0.76rem;
+}
+
+.student-profile-form-grid input:focus {
+  border-color: rgba(134, 239, 172, 0.42);
+}
+
+.student-profile-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  padding: 0 21px 21px;
+}
+
+.student-profile-cancel-button,
+.student-profile-save-button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 13px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 0.73rem;
+  font-weight: 800;
+}
+
+.student-profile-cancel-button {
+  border: 1px solid rgba(134, 239, 172, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: #9bad9f;
+}
+
+.student-profile-save-button {
+  border: 1px solid rgba(134, 239, 172, 0.26);
+  background: rgba(74, 222, 128, 0.13);
+  color: #9cf0b7;
+}
+
+.student-profile-save-button:hover {
+  background: rgba(74, 222, 128, 0.21);
+}
+
+@media (max-width: 600px) {
+  .student-profile-dropdown {
+    right: -8px;
+    width: min(280px, calc(100vw - 28px));
+  }
+
+  .student-profile-form-grid {
+    grid-template-columns: 1fr;
+    padding: 17px;
+  }
+
+  .student-profile-form-grid label:first-child {
+    grid-column: auto;
+  }
+
+  .student-profile-form-actions {
+    padding: 0 17px 17px;
   }
 }
