@@ -11138,3 +11138,27 @@ html[data-theme="light"] .notification-item-content > span {
 html[data-theme="light"] .notification-item-content small {
   color: #6d8675;
 }
+.topbar-search input {
+  cursor: pointer;
+}
+
+.topbar-search kbd {
+  display: inline-flex;
+  min-height: 20px;
+  align-items: center;
+  padding: 0 5px;
+  border: 1px solid rgba(134, 239, 172, 0.14);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #8fa198;
+  font-family: inherit;
+  font-size: 0.6rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+html[data-theme="light"] .topbar-search kbd {
+  border-color: rgba(22, 50, 34, 0.14);
+  background: #edf8f0;
+  color: #45634f;
+}

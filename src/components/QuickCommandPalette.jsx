@@ -119,7 +119,25 @@ function QuickCommandPalette() {
       window.removeEventListener("keydown", handleShortcut);
     };
   }, []);
+  useEffect(() => {
+    function handleOpenFromTopbar() {
+      setIsOpen(true);
+      setQuery("");
+      setActiveIndex(0);
+    }
 
+    window.addEventListener(
+      "eduflow-open-command-palette",
+      handleOpenFromTopbar,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "eduflow-open-command-palette",
+        handleOpenFromTopbar,
+      );
+    };
+  }, []);
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -133,9 +151,7 @@ function QuickCommandPalette() {
   }, [isOpen]);
 
   const subjectMap = useMemo(() => {
-    return new Map(
-      subjects.map((subject) => [Number(subject.id), subject]),
-    );
+    return new Map(subjects.map((subject) => [Number(subject.id), subject]));
   }, [subjects]);
 
   const searchItems = useMemo(() => {
@@ -231,9 +247,7 @@ function QuickCommandPalette() {
     if (event.key === "ArrowUp") {
       event.preventDefault();
 
-      setActiveIndex((previousIndex) =>
-        Math.max(previousIndex - 1, 0),
-      );
+      setActiveIndex((previousIndex) => Math.max(previousIndex - 1, 0));
 
       return;
     }
@@ -300,9 +314,7 @@ function QuickCommandPalette() {
 
             <div className="command-palette-result-heading">
               <span>
-                {query.trim()
-                  ? "REZULTATI PRETRAGE"
-                  : "BRZA NAVIGACIJA"}
+                {query.trim() ? "REZULTATI PRETRAGE" : "BRZA NAVIGACIJA"}
               </span>
 
               <small>

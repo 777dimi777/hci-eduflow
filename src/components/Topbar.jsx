@@ -86,6 +86,9 @@ function Topbar() {
       type: "info",
     });
   }
+  function handleTopbarSearchClick() {
+    window.dispatchEvent(new CustomEvent("eduflow-open-command-palette"));
+  }
   return (
     <>
       <header className="topbar">
@@ -99,9 +102,15 @@ function Topbar() {
 
           <input
             type="text"
+            readOnly
             placeholder="Pretraži predmete, obaveze..."
-            aria-label="Pretraga"
+            aria-label="Otvori brzu pretragu"
+            title="Otvori brzu pretragu"
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={handleTopbarSearchClick}
           />
+
+          <kbd>Ctrl K</kbd>
         </div>
 
         <div className="topbar-actions">
