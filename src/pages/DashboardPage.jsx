@@ -4,6 +4,7 @@ import { useSubjects } from '../context/SubjectContext'
 import { useTasks } from '../context/TaskContext'
 import { formatDate } from '../utils/dateUtils'
 import DailyFocusPanel from '../components/DailyFocusPanel'
+import SmartStudyAssistant from '../components/SmartStudyAssistant'
 function DashboardPage() {
   const { subjects } = useSubjects()
   const { tasks } = useTasks()
@@ -166,6 +167,7 @@ function DashboardPage() {
         </section>
       </div>
       <DailyFocusPanel />
+      <SmartStudyAssistant />
     </section>
   )
 }
