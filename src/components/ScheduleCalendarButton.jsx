@@ -2,44 +2,22 @@ import { useMemo } from 'react'
 import { useSubjects } from '../context/SubjectContext'
 import { useTasks } from '../context/TaskContext'
 import {
-  normalizeCourseCode,
-  normalizeText,
+  findMatchingSubjectForEntry,
 } from '../utils/examSchedulePdfUtils'
-
-function findMatchingSubject(subjects, entry) {
-  if (!entry) {
-    return null
-  }
-
-  const normalizedEntryCode = normalizeCourseCode(entry.courseCode)
-  const normalizedEntryName = normalizeText(entry.subjectName)
-
-  return subjects.find((subject) => {
-    const normalizedSubjectCode = normalizeCourseCode(subject.code)
-    const normalizedSubjectName = normalizeText(subject.name)
-
-    const sameCode =
-      normalizedEntryCode &&
-      normalizedSubjectCode &&
-      normalizedEntryCode === normalizedSubjectCode
-
-    const sameName =
-      normalizedEntryName &&
-      normalizedSubjectName &&
-      (normalizedEntryName === normalizedSubjectName ||
-        normalizedEntryName.includes(normalizedSubjectName) ||
-        normalizedSubjectName.includes(normalizedEntryName))
-
-    return sameCode || sameName
-  })
-}
 
 function ScheduleCalendarButton({ schedule, entry, onFeedback }) {
   const { subjects } = useSubjects()
   const { tasks, addExamTask } = useTasks()
 
   const linkedSubject = useMemo(() => {
-    return findMatchingSubject(subjects, entry)
+    const manuallySelectedSubject = subjects.find(
+      (subject) => Number(subject.id) === Number(entry?.subjectId)
+    )
+
+    return (
+      manuallySelectedSubject ||
+      findMatchingSubjectForEntry(subjects, entry)
+    )
   }, [subjects, entry])
 
   if (!entry || !entry.subjectName) {
@@ -65,10 +43,10 @@ function ScheduleCalendarButton({ schedule, entry, onFeedback }) {
       .filter(Boolean)
       .join('|')
 
-  const alreadyAdded = (tasks || []).some(
+  const alreadyAdded = tasks.some(
     (task) =>
-      task.sourceScheduleId === scheduleReference &&
-      task.sourceScheduleEntryId === entryReference
+      String(task.sourceScheduleId) === String(scheduleReference) &&
+      String(task.sourceScheduleEntryId) === String(entryReference)
   )
 
   function handleAddToCalendar() {
@@ -93,19 +71,13 @@ function ScheduleCalendarButton({ schedule, entry, onFeedback }) {
       onFeedback(
         linkedSubject
           ? `Ispit „${entry.subjectName}“ je dodat u Kalendar i povezan sa predmetom ${linkedSubject.code}.`
-          : `Ispit „${entry.subjectName}“ je dodat u Kalendar.`
+          : `Ispit „${entry.subjectName}“ je dodat u Kalendar bez povezanog predmeta.`
       )
       return
     }
 
     if (result.reason === 'duplicate') {
       onFeedback('Ovaj ispit je već dodat u Kalendar.')
-    }
-
-    if (result.reason === 'missing-date') {
-      onFeedback(
-        'Ispit nema upisan datum. Prvo unesi datum u tabeli rasporeda.'
-      )
     }
   }
 
@@ -124,11 +96,6 @@ function ScheduleCalendarButton({ schedule, entry, onFeedback }) {
       className="schedule-calendar-button"
       onClick={handleAddToCalendar}
       disabled={!entry.dateIso}
-      title={
-        entry.dateIso
-          ? 'Dodaj ispit u Kalendar'
-          : 'Prvo unesi datum ispita'
-      }
     >
       <i className="bi bi-calendar-plus"></i>
       Dodaj

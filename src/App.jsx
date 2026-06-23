@@ -10,6 +10,7 @@ import PassedExamsPage from "./pages/PassedExamsPage";
 import GradeGoalPage from "./pages/GradeGoalPage";
 import MaterialsPage from "./pages/MaterialsPage";
 import PdfImportPage from './pages/PdfImportPage'
+import StatisticsPage from './pages/StatisticsPage'
 function App() {
   return (
     <Routes>
@@ -24,16 +25,7 @@ function App() {
         <Route path="/grade-goal" element={<GradeGoalPage />} />
         <Route path="/materials" element={<MaterialsPage />} />
 
-        <Route
-          path="/statistics"
-          element={
-            <SectionPage
-              title="Statistika"
-              description="Ovde će se pratiti napredak, završene obaveze i uspeh po predmetima."
-              icon="bi-bar-chart-line"
-            />
-          }
-        />
+        <Route path="/statistics" element={<StatisticsPage />} />
 
        <Route path="/pdf-import" element={<PdfImportPage />} />
 
