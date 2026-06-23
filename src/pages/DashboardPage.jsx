@@ -8,6 +8,8 @@ import SmartStudyAssistant from "../components/SmartStudyAssistant";
 import DailyLoadInsight from "../components/DailyLoadInsight";
 import FocusTimerPanel from "../components/FocusTimerPanel";
 import UpcomingDeadlinesPanel from "../components/UpcomingDeadlinesPanel";
+import DataBackupPanel from "../components/DataBackupPanel";
+
 
 function DashboardPage() {
   const { subjects } = useSubjects();
@@ -175,6 +177,7 @@ function DashboardPage() {
       <FocusTimerPanel />
       <SmartStudyAssistant />
       <UpcomingDeadlinesPanel />
+      <DataBackupPanel />
     </section>
   );
 }
