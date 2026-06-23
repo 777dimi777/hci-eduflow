@@ -1,64 +1,64 @@
-import { useMemo } from 'react'
-import { Link } from 'react-router'
-import { useSubjects } from '../context/SubjectContext'
-import { useTasks } from '../context/TaskContext'
-import { formatDate } from '../utils/dateUtils'
-import DailyFocusPanel from '../components/DailyFocusPanel'
-import SmartStudyAssistant from '../components/SmartStudyAssistant'
+import { useMemo } from "react";
+import { Link } from "react-router";
+import { useSubjects } from "../context/SubjectContext";
+import { useTasks } from "../context/TaskContext";
+import { formatDate } from "../utils/dateUtils";
+import DailyFocusPanel from "../components/DailyFocusPanel";
+import SmartStudyAssistant from "../components/SmartStudyAssistant";
 import DailyLoadInsight from "../components/DailyLoadInsight";
 import FocusTimerPanel from "../components/FocusTimerPanel";
-
+import UpcomingDeadlinesPanel from "../components/UpcomingDeadlinesPanel";
 
 function DashboardPage() {
-  const { subjects } = useSubjects()
-  const { tasks } = useTasks()
+  const { subjects } = useSubjects();
+  const { tasks } = useTasks();
 
   const averageProgress =
     subjects.length === 0
       ? 0
       : Math.round(
           subjects.reduce((sum, subject) => sum + subject.progress, 0) /
-            subjects.length
-        )
+            subjects.length,
+        );
 
-  const activeTasks = tasks.filter((task) => task.status !== 'done')
+  const activeTasks = tasks.filter((task) => task.status !== "done");
 
   const upcomingTasks = useMemo(() => {
     return [...activeTasks]
       .sort((firstTask, secondTask) =>
-        firstTask.dueDate.localeCompare(secondTask.dueDate)
+        firstTask.dueDate.localeCompare(secondTask.dueDate),
       )
-      .slice(0, 4)
-  }, [tasks])
+      .slice(0, 4);
+  }, [tasks]);
 
   function getSubjectName(subjectId) {
-    const subject = subjects.find((item) => item.id === subjectId)
+    const subject = subjects.find((item) => item.id === subjectId);
 
-    return subject ? subject.name : 'Obrisani predmet'
+    return subject ? subject.name : "Obrisani predmet";
   }
 
   const statistics = [
     {
       value: subjects.length,
-      label: 'Predmeta',
-      icon: 'bi-book',
+      label: "Predmeta",
+      icon: "bi-book",
     },
     {
       value: activeTasks.length,
-      label: 'Aktivnih obaveza',
-      icon: 'bi-list-check',
+      label: "Aktivnih obaveza",
+      icon: "bi-list-check",
     },
     {
       value: upcomingTasks.length,
-      label: 'Predstojećih rokova',
-      icon: 'bi-calendar-event',
+      label: "Predstojećih rokova",
+      icon: "bi-calendar-event",
     },
     {
       value: `${averageProgress}%`,
-      label: 'Ukupan napredak',
-      icon: 'bi-pie-chart',
+      label: "Ukupan napredak",
+      icon: "bi-pie-chart",
     },
-  ]
+  ];
 
   return (
     <section>
@@ -174,8 +174,9 @@ function DashboardPage() {
       <DailyLoadInsight />
       <FocusTimerPanel />
       <SmartStudyAssistant />
+      <UpcomingDeadlinesPanel />
     </section>
-  )
+  );
 }
 
-export default DashboardPage
+export default DashboardPage;
