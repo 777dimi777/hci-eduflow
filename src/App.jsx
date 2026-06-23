@@ -1,14 +1,14 @@
-import { Navigate, Route, Routes } from 'react-router'
-import AppLayout from './layouts/AppLayout'
-import DashboardPage from './pages/DashboardPage'
-import SectionPage from './pages/SectionPage'
-import NotFoundPage from './pages/NotFoundPage'
-import SubjectsPage from './pages/SubjectsPage'
-import TasksPage from './pages/TasksPage'
-import CalendarPage from './pages/CalendarPage'
-import PassedExamsPage from './pages/PassedExamsPage'
-import GradeGoalPage from './pages/GradeGoalPage'
-
+import { Navigate, Route, Routes } from "react-router";
+import AppLayout from "./layouts/AppLayout";
+import DashboardPage from "./pages/DashboardPage";
+import SectionPage from "./pages/SectionPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import SubjectsPage from "./pages/SubjectsPage";
+import TasksPage from "./pages/TasksPage";
+import CalendarPage from "./pages/CalendarPage";
+import PassedExamsPage from "./pages/PassedExamsPage";
+import GradeGoalPage from "./pages/GradeGoalPage";
+import MaterialsPage from "./pages/MaterialsPage";
 function App() {
   return (
     <Routes>
@@ -21,17 +21,7 @@ function App() {
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/exams" element={<PassedExamsPage />} />
         <Route path="/grade-goal" element={<GradeGoalPage />} />
-
-        <Route
-          path="/materials"
-          element={
-            <SectionPage
-              title="Materijali"
-              description="Ovde će korisnik čuvati beleške, linkove i materijale po predmetima."
-              icon="bi-folder2-open"
-            />
-          }
-        />
+        <Route path="/materials" element={<MaterialsPage />} />
 
         <Route
           path="/statistics"
@@ -69,7 +59,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;
