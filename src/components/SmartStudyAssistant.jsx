@@ -100,8 +100,7 @@ function SmartStudyAssistant() {
   const { subjects } = useSubjects();
   const { tasks } = useTasks();
 
-  const { todayKey, getPlanTaskIds, addTaskToPlan, maxDailyTasks } =
-    useDailyPlan();
+const { todayKey, getPlanTaskIds, addTaskToPlan } = useDailyPlan();
 
   const [feedback, setFeedback] = useState("");
   const { showToast } = useToast();
@@ -175,12 +174,15 @@ function SmartStudyAssistant() {
     const result = addTaskToPlan(todayKey, task.id);
 
     if (result.added) {
-      const message = `„${task.title}“ je dodat u današnji fokus.`;
+      const message = result.warning
+        ? `„${task.title}“ je dodat u fokus. Sada imaš ${result.count} obaveza — plan je prilično opterećen.`
+        : `„${task.title}“ je dodat u današnji fokus.`;
 
       setFeedback(message);
+
       showToast({
         message,
-        type: "success",
+        type: result.warning ? "warning" : "success",
       });
 
       return;
@@ -190,21 +192,10 @@ function SmartStudyAssistant() {
       const message = "Ta obaveza je već u današnjem fokusu.";
 
       setFeedback(message);
+
       showToast({
         message,
         type: "info",
-      });
-
-      return;
-    }
-
-    if (result.reason === "limit") {
-      const message = `Dnevni fokus može da sadrži najviše ${maxDailyTasks} obaveza.`;
-
-      setFeedback(message);
-      showToast({
-        message,
-        type: "warning",
       });
     }
   }

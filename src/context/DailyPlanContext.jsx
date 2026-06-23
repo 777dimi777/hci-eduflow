@@ -162,34 +162,32 @@ export function DailyPlanProvider({ children }) {
   }
 
   function addTaskToPlan(dateKey, taskId) {
-    const currentPlan = getPlan(dateKey);
+    const currentPlan = normalizePlan(dailyPlans[dateKey]);
 
-    const selectedTaskIds = [
-      ...currentPlan.plannedTaskIds,
-      ...currentPlan.completedTasks.map((task) => task.taskId),
-    ];
-
-    if (selectedTaskIds.includes(taskId)) {
-      return { added: false, reason: "exists" };
-    }
-
-    if (selectedTaskIds.length >= MAX_DAILY_TASKS) {
-      return { added: false, reason: "limit" };
-    }
-
-    setDailyPlans((previousPlans) => {
-      const plan = normalizePlan(previousPlans[dateKey]);
-
+    if (currentPlan.plannedTaskIds.includes(taskId)) {
       return {
-        ...previousPlans,
-        [dateKey]: {
-          ...plan,
-          plannedTaskIds: [...plan.plannedTaskIds, taskId],
-        },
+        added: false,
+        reason: "exists",
       };
-    });
+    }
 
-    return { added: true };
+    const nextTaskCount = currentPlan.plannedTaskIds.length + 1;
+
+    const updatedPlan = {
+      ...currentPlan,
+      plannedTaskIds: [...currentPlan.plannedTaskIds, taskId],
+    };
+
+    setDailyPlans((previousPlans) => ({
+      ...previousPlans,
+      [dateKey]: updatedPlan,
+    }));
+
+    return {
+      added: true,
+      count: nextTaskCount,
+      warning: nextTaskCount > MAX_DAILY_TASKS,
+    };
   }
 
   function completeTaskInPlan(dateKey, taskId, previousStatus) {
