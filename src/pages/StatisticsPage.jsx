@@ -7,8 +7,8 @@ import {
   calculateWeightedAverage,
   formatAverage,
 } from "../utils/gradeUtils";
+import SemesterPerformancePanel from "../components/SemesterPerformancePanel";
 import { getSubjectColorValue } from "../utils/subjectColorUtils";
-import WeeklyWorkloadPanel from "../components/WeeklyWorkloadPanel";
 import WeeklyWorkloadPanel from "../components/WeeklyWorkloadPanel";
 function StatisticsPage() {
   const { subjects } = useSubjects();
