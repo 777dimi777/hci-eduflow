@@ -2534,3 +2534,441 @@ p {
   font-size: 0.68rem;
   font-weight: 800;
 }
+.passed-exams-page {
+  animation: academic-page-enter 0.32s ease both;
+}
+
+@keyframes academic-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.exam-form-wrapper {
+  margin-bottom: 24px;
+}
+
+.exam-form-card {
+  padding: 26px;
+  border: 1px solid rgba(74, 222, 128, 0.17);
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    rgba(25, 43, 33, 0.96),
+    rgba(11, 25, 17, 0.98)
+  );
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+.form-global-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 11px 13px;
+  border: 1px solid rgba(251, 113, 133, 0.24);
+  border-radius: 11px;
+  background: rgba(251, 113, 133, 0.08);
+  color: #fda4af;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.academic-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.academic-summary-card {
+  display: flex;
+  min-height: 126px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 21px;
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.1);
+  border-radius: 17px;
+  background:
+    radial-gradient(circle at 85% 10%, rgba(74, 222, 128, 0.11), transparent 38%),
+    linear-gradient(145deg, rgba(20, 34, 27, 0.96), rgba(11, 22, 16, 0.97));
+}
+
+.academic-summary-card span {
+  display: block;
+  color: #8fa198;
+  font-size: 0.8rem;
+}
+
+.academic-summary-card strong {
+  display: block;
+  margin-top: 7px;
+  color: #eff9f1;
+  font-size: 1.8rem;
+  font-weight: 820;
+  letter-spacing: -0.05em;
+}
+
+.academic-summary-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(74, 222, 128, 0.18);
+  border-radius: 14px;
+  background: rgba(74, 222, 128, 0.1);
+  color: #7aed9e;
+  font-size: 1.3rem;
+}
+
+.exams-page-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(290px, 0.65fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.passed-exams-table-card,
+.grade-distribution-card {
+  border: 1px solid rgba(134, 239, 172, 0.1);
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    rgba(20, 34, 27, 0.96),
+    rgba(11, 22, 16, 0.97)
+  );
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.passed-exams-table-card {
+  overflow: hidden;
+}
+
+.passed-exams-table-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.passed-exams-table-heading p,
+.grade-distribution-heading p {
+  margin-bottom: 5px;
+  color: #718278;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.passed-exams-table-heading h2,
+.grade-distribution-heading h2 {
+  margin-bottom: 0;
+  color: #eff9f1;
+  font-size: 1.08rem;
+  font-weight: 780;
+}
+
+.exams-search-box {
+  display: flex;
+  min-width: 230px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 12px;
+  border: 1px solid rgba(134, 239, 172, 0.12);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.025);
+  color: #6e8174;
+}
+
+.exams-search-box:focus-within {
+  border-color: rgba(74, 222, 128, 0.48);
+  box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.08);
+}
+
+.exams-search-box input {
+  width: 100%;
+  height: 38px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #eff9f1;
+  font-size: 0.84rem;
+}
+
+.exams-search-box input::placeholder {
+  color: #6f8076;
+}
+
+.passed-exams-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.passed-exams-table th {
+  padding: 15px 18px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.1);
+  background: rgba(134, 239, 172, 0.03);
+  text-align: left;
+}
+
+.passed-exams-table td {
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.07);
+  color: #c9d7cd;
+  font-size: 0.83rem;
+  vertical-align: middle;
+}
+
+.passed-exams-table tbody tr:nth-child(even) {
+  background: rgba(134, 239, 172, 0.018);
+}
+
+.passed-exams-table tbody tr:hover {
+  background: rgba(74, 222, 128, 0.06);
+}
+
+.passed-exams-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.passed-exam-subject-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 190px;
+}
+
+.passed-exam-subject-cell > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.passed-exam-subject-cell strong {
+  color: #edf8ef;
+  font-size: 0.86rem;
+  font-weight: 720;
+}
+
+.passed-exam-subject-cell span {
+  color: #7e9184;
+  font-size: 0.72rem;
+}
+
+.passed-exam-color-dot {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 12px currentColor;
+}
+
+.exam-grade-badge {
+  display: inline-grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border-radius: 9px;
+  font-size: 0.8rem;
+  font-weight: 850;
+}
+
+.exam-grade-6 {
+  background: rgba(251, 113, 133, 0.12);
+  color: #fda4af;
+}
+
+.exam-grade-7 {
+  background: rgba(251, 191, 36, 0.11);
+  color: #fde68a;
+}
+
+.exam-grade-8 {
+  background: rgba(74, 222, 128, 0.11);
+  color: #86efac;
+}
+
+.exam-grade-9 {
+  background: rgba(45, 212, 191, 0.11);
+  color: #7ce8dc;
+}
+
+.exam-grade-10 {
+  background: rgba(167, 139, 250, 0.13);
+  color: #c4b5fd;
+}
+
+.passed-exam-date {
+  color: #8ce8a8 !important;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.passed-exam-date i {
+  margin-right: 7px;
+  color: #5ddb86;
+}
+
+.passed-exams-empty-state {
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.passed-exams-empty-state i {
+  color: #70e897;
+  font-size: 2.1rem;
+}
+
+.passed-exams-empty-state h2 {
+  margin: 14px 0 8px;
+  color: #eff9f1;
+  font-size: 1.12rem;
+}
+
+.passed-exams-empty-state p {
+  max-width: 440px;
+  margin: 0 auto;
+  color: #8da097;
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.grade-distribution-card {
+  padding: 22px;
+}
+
+.grade-distribution-heading {
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.grade-chart {
+  display: flex;
+  height: 245px;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 11px;
+  padding: 22px 0 10px;
+}
+
+.grade-chart-column {
+  display: flex;
+  height: 100%;
+  min-width: 34px;
+  flex: 1;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.grade-chart-count {
+  color: #b9cabe;
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.grade-chart-bar-track {
+  display: flex;
+  width: 100%;
+  height: 150px;
+  align-items: flex-end;
+  overflow: hidden;
+  border-radius: 10px;
+  background: rgba(134, 239, 172, 0.07);
+}
+
+.grade-chart-bar {
+  width: 100%;
+  min-height: 8px;
+  border-radius: 9px 9px 0 0;
+  background: linear-gradient(180deg, #86efac, #22c55e);
+  box-shadow: 0 0 18px rgba(74, 222, 128, 0.24);
+  transition: height 0.35s ease;
+}
+
+.grade-chart-column strong {
+  color: #d8e7dc;
+  font-size: 0.82rem;
+}
+
+.grade-chart-empty {
+  display: flex;
+  min-height: 210px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 11px;
+  color: #829388;
+  text-align: center;
+}
+
+.grade-chart-empty i {
+  color: #6ce993;
+  font-size: 1.7rem;
+}
+
+.grade-chart-empty p {
+  max-width: 200px;
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.grade-distribution-info {
+  display: flex;
+  gap: 9px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(134, 239, 172, 0.08);
+  color: #7f9286;
+}
+
+.grade-distribution-info i {
+  margin-top: 2px;
+  color: #73e99a;
+}
+
+.grade-distribution-info p {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 1180px) {
+  .academic-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .exams-page-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .academic-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .passed-exams-table-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .exams-search-box {
+    min-width: 0;
+  }
+
+  .exam-form-card {
+    padding: 20px;
+  }
+}

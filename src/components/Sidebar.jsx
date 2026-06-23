@@ -6,6 +6,7 @@ const mainNavigation = [
   { to: '/tasks', icon: 'bi-check2-square', label: 'Obaveze' },
   { to: '/calendar', icon: 'bi-calendar-event', label: 'Kalendar' },
   { to: '/materials', icon: 'bi-folder2-open', label: 'Materijali' },
+  { to: '/exams', icon: 'bi-patch-check', label: 'Ispiti i prosek' },
   { to: '/statistics', icon: 'bi-bar-chart-line', label: 'Statistika' },
 ]
 

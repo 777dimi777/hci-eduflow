@@ -9,6 +9,7 @@ import App from './App.jsx'
 import { SubjectProvider } from './context/SubjectContext'
 import { TaskProvider } from './context/TaskContext'
 import { DailyPlanProvider } from './context/DailyPlanContext'
+import { AcademicProvider } from './context/AcademicContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -16,7 +17,9 @@ createRoot(document.getElementById('root')).render(
       <SubjectProvider>
         <TaskProvider>
           <DailyPlanProvider>
-            <App />
+            <AcademicProvider>
+              <App />
+            </AcademicProvider>
           </DailyPlanProvider>
         </TaskProvider>
       </SubjectProvider>

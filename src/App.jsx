@@ -1,11 +1,13 @@
-import { Navigate, Route, Routes } from "react-router";
-import AppLayout from "./layouts/AppLayout";
-import DashboardPage from "./pages/DashboardPage";
-import SectionPage from "./pages/SectionPage";
-import NotFoundPage from "./pages/NotFoundPage";
-import SubjectsPage from "./pages/SubjectsPage";
+import { Navigate, Route, Routes } from 'react-router'
+import AppLayout from './layouts/AppLayout'
+import DashboardPage from './pages/DashboardPage'
+import SectionPage from './pages/SectionPage'
+import NotFoundPage from './pages/NotFoundPage'
+import SubjectsPage from './pages/SubjectsPage'
 import TasksPage from './pages/TasksPage'
 import CalendarPage from './pages/CalendarPage'
+import PassedExamsPage from './pages/PassedExamsPage'
+
 function App() {
   return (
     <Routes>
@@ -13,12 +15,10 @@ function App() {
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
         <Route path="/dashboard" element={<DashboardPage />} />
-
         <Route path="/subjects" element={<SubjectsPage />} />
-
-       <Route path="/tasks" element={<TasksPage />} />
-
-       <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/tasks" element={<TasksPage />} />
+        <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/exams" element={<PassedExamsPage />} />
 
         <Route
           path="/materials"
@@ -67,7 +67,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App
