@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useStudentProfile } from "../context/StudentProfileContext";
 import { useToast } from "../context/ToastContext";
+import NotificationBell from "./NotificationBell";
 function getFirstName(fullName) {
   return String(fullName || "Student")
     .trim()
@@ -104,16 +105,7 @@ function Topbar() {
         </div>
 
         <div className="topbar-actions">
-          
-          <button
-            type="button"
-            className="topbar-icon-button"
-            aria-label="Obaveštenja"
-            title="Obaveštenja"
-          >
-            <i className="bi bi-bell"></i>
-            <span className="notification-dot"></span>
-          </button>
+          <NotificationBell />
 
           <div className="topbar-profile-menu" ref={profileMenuRef}>
             <button
