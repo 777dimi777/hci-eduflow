@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { useTasks } from '../context/TaskContext'
 import { formatDate } from '../utils/dateUtils'
 import { getSubjectColorValue } from '../utils/subjectColorUtils'
@@ -100,6 +101,14 @@ function SubjectCard({ subject, onDelete, onEdit, isDeleting }) {
           {nextTask ? formatDate(nextTask.dueDate) : 'Nema roka'}
         </span>
       </div>
+
+      <Link
+        to={`/subjects/${subject.id}`}
+        className="subject-detail-link"
+      >
+        Otvori detalje
+        <i className="bi bi-arrow-right"></i>
+      </Link>
     </article>
   )
 }

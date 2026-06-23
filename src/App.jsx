@@ -9,8 +9,9 @@ import CalendarPage from "./pages/CalendarPage";
 import PassedExamsPage from "./pages/PassedExamsPage";
 import GradeGoalPage from "./pages/GradeGoalPage";
 import MaterialsPage from "./pages/MaterialsPage";
-import PdfImportPage from './pages/PdfImportPage'
-import StatisticsPage from './pages/StatisticsPage'
+import PdfImportPage from "./pages/PdfImportPage";
+import StatisticsPage from "./pages/StatisticsPage";
+import SubjectDetailsPage from "./pages/SubjectDetailsPage";
 function App() {
   return (
     <Routes>
@@ -19,6 +20,7 @@ function App() {
 
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/subjects" element={<SubjectsPage />} />
+        <Route path="/subjects/:subjectId" element={<SubjectDetailsPage />} />
         <Route path="/tasks" element={<TasksPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/exams" element={<PassedExamsPage />} />
@@ -27,7 +29,7 @@ function App() {
 
         <Route path="/statistics" element={<StatisticsPage />} />
 
-       <Route path="/pdf-import" element={<PdfImportPage />} />
+        <Route path="/pdf-import" element={<PdfImportPage />} />
 
         <Route
           path="/settings"
