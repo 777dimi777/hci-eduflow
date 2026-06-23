@@ -2042,3 +2042,362 @@ p {
     padding: 20px;
   }
 }
+.daily-focus-panel {
+  margin-top: 22px;
+  padding: 24px;
+  border: 1px solid rgba(134, 239, 172, 0.12);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 86% 5%, rgba(74, 222, 128, 0.12), transparent 23%),
+    linear-gradient(145deg, rgba(20, 34, 27, 0.96), rgba(11, 22, 16, 0.97));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.025);
+  animation: daily-focus-enter 0.38s ease both;
+}
+
+@keyframes daily-focus-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.daily-focus-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.09);
+}
+
+.daily-focus-heading h2 {
+  margin-bottom: 7px;
+  color: #f1faf3;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.daily-focus-heading p:not(.page-eyebrow) {
+  margin-bottom: 0;
+  color: #92a399;
+  font-size: 0.84rem;
+}
+
+.daily-focus-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.daily-focus-count {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid rgba(74, 222, 128, 0.18);
+  border-radius: 999px;
+  background: rgba(74, 222, 128, 0.09);
+  color: #8df0ad;
+  font-size: 0.73rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.daily-focus-clear-button {
+  min-height: 32px;
+  border: 0;
+  background: transparent;
+  color: #91a198;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.daily-focus-clear-button:hover {
+  color: #fca5a5;
+}
+
+.daily-focus-feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 0;
+  color: #98f0b4;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.daily-focus-feedback i {
+  color: #55df82;
+}
+
+.daily-focus-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  padding-top: 22px;
+}
+
+.daily-focus-column {
+  min-width: 0;
+}
+
+.daily-focus-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.daily-focus-section-heading h3 {
+  margin-bottom: 0;
+  color: #eaf5ed;
+  font-size: 0.92rem;
+  font-weight: 780;
+}
+
+.daily-focus-section-heading span {
+  color: #718278;
+  font-size: 0.7rem;
+  text-align: right;
+}
+
+.daily-focus-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.daily-focus-task {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 84px;
+  padding: 13px;
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.09);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  transition: 0.2s ease;
+}
+
+.daily-focus-task::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: var(--subject-color);
+  content: '';
+}
+
+.daily-focus-task:hover {
+  border-color: rgba(134, 239, 172, 0.2);
+  background: rgba(74, 222, 128, 0.06);
+  transform: translateY(-2px);
+}
+
+.daily-focus-task-selected {
+  border-color: color-mix(in srgb, var(--subject-color) 30%, transparent);
+  background: color-mix(in srgb, var(--subject-color) 8%, rgba(255, 255, 255, 0.025));
+}
+
+.daily-focus-task-content {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.daily-focus-subject {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  color: #96aa9c;
+  font-size: 0.69rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.daily-focus-subject-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--subject-color);
+  box-shadow: 0 0 10px var(--subject-color);
+}
+
+.daily-focus-task strong {
+  overflow: hidden;
+  color: #edf8ef;
+  font-size: 0.84rem;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.daily-focus-task small {
+  color: #7e9284;
+  font-size: 0.71rem;
+}
+
+.daily-focus-add-button {
+  display: inline-flex;
+  min-height: 32px;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid rgba(74, 222, 128, 0.18);
+  border-radius: 9px;
+  background: rgba(74, 222, 128, 0.08);
+  color: #8df0ad;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.daily-focus-add-button:hover:not(:disabled) {
+  border-color: rgba(74, 222, 128, 0.42);
+  background: rgba(74, 222, 128, 0.17);
+  transform: translateY(-1px);
+}
+
+.daily-focus-add-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.daily-focus-complete-button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--subject-color) 36%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--subject-color) 12%, transparent);
+  color: var(--subject-color);
+  transition: 0.2s ease;
+}
+
+.daily-focus-complete-button:hover {
+  background: var(--subject-color);
+  color: #07110d;
+  transform: scale(1.08);
+}
+
+.daily-focus-remove-button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #7d8e84;
+}
+
+.daily-focus-remove-button:hover {
+  background: rgba(248, 113, 113, 0.1);
+  color: #fca5a5;
+}
+
+.daily-focus-placeholder {
+  display: flex;
+  min-height: 180px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 11px;
+  padding: 24px;
+  border: 1px dashed rgba(134, 239, 172, 0.15);
+  border-radius: 14px;
+  background: rgba(134, 239, 172, 0.02);
+  color: #7f9286;
+  text-align: center;
+}
+
+.daily-focus-placeholder i {
+  color: #71e897;
+  font-size: 1.45rem;
+}
+
+.daily-focus-placeholder p {
+  max-width: 250px;
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.daily-focus-empty-state {
+  padding: 34px 20px 10px;
+  text-align: center;
+}
+
+.daily-focus-empty-icon {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  margin: 0 auto 14px;
+  border-radius: 17px;
+  background: rgba(74, 222, 128, 0.09);
+  color: #7bed9f;
+  font-size: 1.4rem;
+}
+
+.daily-focus-empty-state h3 {
+  margin-bottom: 8px;
+  color: #edf8ef;
+  font-size: 1.02rem;
+  font-weight: 780;
+}
+
+.daily-focus-empty-state p {
+  margin-bottom: 12px;
+  color: #8b9c91;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 920px) {
+  .daily-focus-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .daily-focus-panel {
+    padding: 20px;
+  }
+
+  .daily-focus-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .daily-focus-heading-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .daily-focus-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .daily-focus-section-heading span {
+    text-align: left;
+  }
+}

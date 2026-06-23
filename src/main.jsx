@@ -8,13 +8,16 @@ import './index.css'
 import App from './App.jsx'
 import { SubjectProvider } from './context/SubjectContext'
 import { TaskProvider } from './context/TaskContext'
+import { DailyPlanProvider } from './context/DailyPlanContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <SubjectProvider>
         <TaskProvider>
-          <App />
+          <DailyPlanProvider>
+            <App />
+          </DailyPlanProvider>
         </TaskProvider>
       </SubjectProvider>
     </BrowserRouter>

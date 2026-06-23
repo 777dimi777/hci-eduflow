@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { useSubjects } from '../context/SubjectContext'
 import { useTasks } from '../context/TaskContext'
 import { formatDate } from '../utils/dateUtils'
-
+import DailyFocusPanel from '../components/DailyFocusPanel'
 function DashboardPage() {
   const { subjects } = useSubjects()
   const { tasks } = useTasks()
@@ -165,6 +165,7 @@ function DashboardPage() {
           </Link>
         </section>
       </div>
+      <DailyFocusPanel />
     </section>
   )
 }
