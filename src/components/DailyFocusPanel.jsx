@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { useDailyPlan } from '../context/DailyPlanContext'
 import { useSubjects } from '../context/SubjectContext'
 import { useTasks } from '../context/TaskContext'
-import { formatDate, parseDateKey, toDateKey } from '../utils/dateUtils'
+import { formatDate, parseDateKey } from '../utils/dateUtils'
 import { getSubjectColorValue } from '../utils/subjectColorUtils'
 
 const priorityScore = {
@@ -64,9 +64,14 @@ function getUrgencyText(task) {
 function DailyFocusPanel() {
   const { subjects } = useSubjects()
   const { tasks, updateTaskStatus } = useTasks()
+
   const {
+    todayKey,
     getPlanTaskIds,
+    getCompletedTaskEntries,
     addTaskToPlan,
+    completeTaskInPlan,
+    reopenTaskInPlan,
     removeTaskFromPlan,
     clearDailyPlan,
     maxDailyTasks,
@@ -74,31 +79,64 @@ function DailyFocusPanel() {
 
   const [feedback, setFeedback] = useState('')
 
-  const todayKey = toDateKey(new Date())
-
   const subjectMap = useMemo(() => {
     return new Map(subjects.map((subject) => [subject.id, subject]))
   }, [subjects])
 
-  const activeTasks = useMemo(() => {
-    return tasks.filter((task) => task.status !== 'done')
+  const taskMap = useMemo(() => {
+    return new Map(tasks.map((task) => [task.id, task]))
   }, [tasks])
 
   const plannedTaskIds = getPlanTaskIds(todayKey)
+  const completedTaskEntries = getCompletedTaskEntries(todayKey)
 
   const plannedTasks = useMemo(() => {
     return plannedTaskIds
-      .map((taskId) => activeTasks.find((task) => task.id === taskId))
+      .map((taskId) => taskMap.get(taskId))
       .filter(Boolean)
-      .sort((firstTask, secondTask) => getTaskUrgency(secondTask) - getTaskUrgency(firstTask))
-  }, [plannedTaskIds, activeTasks])
+      .sort(
+        (firstTask, secondTask) =>
+          getTaskUrgency(secondTask) - getTaskUrgency(firstTask)
+      )
+  }, [plannedTaskIds, taskMap])
+
+  const completedTasks = useMemo(() => {
+    return completedTaskEntries
+      .map((entry) => {
+        const task = taskMap.get(entry.taskId)
+
+        return task
+          ? {
+              ...task,
+              previousStatus: entry.previousStatus,
+            }
+          : null
+      })
+      .filter(Boolean)
+  }, [completedTaskEntries, taskMap])
+
+  const completedTaskIds = new Set(
+    completedTaskEntries.map((entry) => entry.taskId)
+  )
+
+  const plannedTaskIdSet = new Set(plannedTaskIds)
 
   const recommendedTasks = useMemo(() => {
-    return activeTasks
-      .filter((task) => !plannedTaskIds.includes(task.id))
-      .sort((firstTask, secondTask) => getTaskUrgency(secondTask) - getTaskUrgency(firstTask))
+    return tasks
+      .filter(
+        (task) =>
+          task.status !== 'done' &&
+          !plannedTaskIdSet.has(task.id) &&
+          !completedTaskIds.has(task.id)
+      )
+      .sort(
+        (firstTask, secondTask) =>
+          getTaskUrgency(secondTask) - getTaskUrgency(firstTask)
+      )
       .slice(0, 5)
-  }, [activeTasks, plannedTaskIds])
+  }, [tasks, plannedTaskIds, completedTaskEntries])
+
+  const totalFocusedTasks = plannedTasks.length + completedTasks.length
 
   function getSubject(task) {
     return subjectMap.get(task.subjectId)
@@ -134,9 +172,31 @@ function DailyFocusPanel() {
   }
 
   function handleCompleteTask(task) {
+    const result = completeTaskInPlan(
+      todayKey,
+      task.id,
+      task.status
+    )
+
+    if (!result.moved) {
+      return
+    }
+
     updateTaskStatus(task.id, 'done')
-    removeTaskFromPlan(todayKey, task.id)
-    setFeedback(`Odlično! Obaveza „${task.title}“ je označena kao završena.`)
+
+    setFeedback(`Odlično! „${task.title}“ je prebačen u urađene obaveze.`)
+  }
+
+  function handleReopenTask(task) {
+    const result = reopenTaskInPlan(todayKey, task.id)
+
+    if (!result.moved) {
+      return
+    }
+
+    updateTaskStatus(task.id, result.previousStatus || 'todo')
+
+    setFeedback(`„${task.title}“ je vraćen među obaveze za danas.`)
   }
 
   function handleClearPlan() {
@@ -151,16 +211,17 @@ function DailyFocusPanel() {
           <p className="page-eyebrow">DNEVNI PLAN</p>
           <h2>Dnevni fokus</h2>
           <p>
-            Izaberi najviše {maxDailyTasks} obaveza koje želiš da završiš danas.
+            Izaberi najviše {maxDailyTasks} obaveza. Kvačica označava da je
+            obaveza završena danas.
           </p>
         </div>
 
         <div className="daily-focus-heading-actions">
           <span className="daily-focus-count">
-            {plannedTasks.length}/{maxDailyTasks} planirano
+            {totalFocusedTasks}/{maxDailyTasks} planirano
           </span>
 
-          {plannedTasks.length > 0 && (
+          {totalFocusedTasks > 0 && (
             <button
               type="button"
               className="daily-focus-clear-button"
@@ -179,14 +240,15 @@ function DailyFocusPanel() {
         </p>
       )}
 
-      {activeTasks.length === 0 ? (
+      {tasks.filter((task) => task.status !== 'done').length === 0 &&
+      completedTasks.length === 0 ? (
         <div className="daily-focus-empty-state">
           <div className="daily-focus-empty-icon">
             <i className="bi bi-emoji-smile"></i>
           </div>
 
           <h3>Nema aktivnih obaveza</h3>
-          <p>Sve je završeno. Dodaj novu obavezu kada budeš imao sledeći rok.</p>
+          <p>Sve je završeno. Dodaj novu obavezu kada dobiješ sledeći rok.</p>
 
           <Link to="/tasks" className="panel-link">
             Dodaj obavezu
@@ -198,7 +260,7 @@ function DailyFocusPanel() {
           <div className="daily-focus-column">
             <div className="daily-focus-section-heading">
               <h3>Planirano za danas</h3>
-              <span>Ovo je tvoj konkretan plan rada.</span>
+              <span>Ovo su obaveze koje još treba da završiš.</span>
             </div>
 
             {plannedTasks.length > 0 ? (
@@ -246,11 +308,68 @@ function DailyFocusPanel() {
               <div className="daily-focus-placeholder">
                 <i className="bi bi-bullseye"></i>
                 <p>
-                  Još nisi izabrao obaveze za danas. Dodaj predloge sa desne
+                  Trenutno nemaš planirane obaveze. Dodaj predloge sa desne
                   strane.
                 </p>
               </div>
             )}
+
+            <div className="daily-focus-completed-section">
+              <div className="daily-focus-completed-heading">
+                <div>
+                  <h3>
+                    <i className="bi bi-check2-circle"></i>
+                    Urađeno danas
+                  </h3>
+                  <span>Ovaj deo se automatski prazni sledećeg dana.</span>
+                </div>
+
+                <span className="daily-focus-completed-count">
+                  {completedTasks.length}
+                </span>
+              </div>
+
+              {completedTasks.length > 0 ? (
+                <div className="daily-focus-list">
+                  {completedTasks.map((task) => (
+                    <article
+                      key={task.id}
+                      className="daily-focus-task daily-focus-task-completed"
+                      style={{ '--subject-color': getTaskColor(task) }}
+                    >
+                      <button
+                        type="button"
+                        className="daily-focus-reopen-button"
+                        onClick={() => handleReopenTask(task)}
+                        title="Vrati među obaveze za danas"
+                        aria-label={`Vrati među obaveze za danas: ${task.title}`}
+                      >
+                        <i className="bi bi-check-lg"></i>
+                      </button>
+
+                      <div className="daily-focus-task-content">
+                        <span className="daily-focus-subject">
+                          <span className="daily-focus-subject-dot"></span>
+                          {getSubjectName(task)}
+                        </span>
+
+                        <strong>{task.title}</strong>
+
+                        <small>
+                          Završeno danas — klikni kvačicu da vratiš obavezu.
+                        </small>
+                      </div>
+
+                      <span className="daily-focus-done-label">Urađeno</span>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <p className="daily-focus-completed-empty">
+                  Kada označiš obavezu kao završenu, pojaviće se ovde.
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="daily-focus-column">
@@ -282,7 +401,7 @@ function DailyFocusPanel() {
                       type="button"
                       className="daily-focus-add-button"
                       onClick={() => handleAddToPlan(task)}
-                      disabled={plannedTasks.length >= maxDailyTasks}
+                      disabled={totalFocusedTasks >= maxDailyTasks}
                       title="Dodaj u dnevni fokus"
                     >
                       <i className="bi bi-plus-lg"></i>
@@ -293,7 +412,7 @@ function DailyFocusPanel() {
               ) : (
                 <div className="daily-focus-placeholder">
                   <i className="bi bi-check2-all"></i>
-                  <p>Sve aktivne obaveze su već dodate u današnji fokus.</p>
+                  <p>Sve dostupne obaveze su već u današnjem fokusu.</p>
                 </div>
               )}
             </div>
