@@ -7,6 +7,7 @@ import SubjectsPage from './pages/SubjectsPage'
 import TasksPage from './pages/TasksPage'
 import CalendarPage from './pages/CalendarPage'
 import PassedExamsPage from './pages/PassedExamsPage'
+import GradeGoalPage from './pages/GradeGoalPage'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/tasks" element={<TasksPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/exams" element={<PassedExamsPage />} />
+        <Route path="/grade-goal" element={<GradeGoalPage />} />
 
         <Route
           path="/materials"
