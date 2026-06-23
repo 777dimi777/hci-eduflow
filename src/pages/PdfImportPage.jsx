@@ -1,44 +1,44 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useExamSchedules } from '../context/ExamScheduleContext'
+import { useEffect, useMemo, useState } from "react";
+import { useExamSchedules } from "../context/ExamScheduleContext";
 import {
   createEmptyExamEntry,
   extractPdfRows,
   parseExamScheduleRows,
-} from '../utils/examSchedulePdfUtils'
-
+} from "../utils/examSchedulePdfUtils";
+import ScheduleCalendarButton from "../components/ScheduleCalendarButton";
 const defaultProfile = {
-  level: 'OAS',
-  accreditation: '2019',
-  semester: '6',
-  module: 'RII',
-  codePrefix: '3OER6',
-}
+  level: "OAS",
+  accreditation: "2019",
+  semester: "6",
+  module: "RII",
+  codePrefix: "3OER6",
+};
 
 const accentOptions = [
-  '#4ade80',
-  '#2dd4bf',
-  '#38bdf8',
-  '#a78bfa',
-  '#fbbf24',
-  '#fb7185',
-]
+  "#4ade80",
+  "#2dd4bf",
+  "#38bdf8",
+  "#a78bfa",
+  "#fbbf24",
+  "#fb7185",
+];
 
 function getProfileLabel(profile) {
   return [
     profile.level,
     profile.accreditation,
     profile.module,
-    profile.semester ? `${profile.semester}. semestar` : '',
+    profile.semester ? `${profile.semester}. semestar` : "",
   ]
     .filter(Boolean)
-    .join(' · ')
+    .join(" · ");
 }
 
 function isValidEntry(entry) {
   return (
-    String(entry.courseCode || '').trim() &&
-    String(entry.subjectName || '').trim()
-  )
+    String(entry.courseCode || "").trim() &&
+    String(entry.subjectName || "").trim()
+  );
 }
 
 function PdfImportPage() {
@@ -50,78 +50,78 @@ function PdfImportPage() {
     addScheduleEntry,
     deleteScheduleEntry,
     deleteSchedule,
-  } = useExamSchedules()
+  } = useExamSchedules();
 
-  const [selectedFile, setSelectedFile] = useState(null)
-  const [scheduleTitle, setScheduleTitle] = useState('')
-  const [profile, setProfile] = useState(defaultProfile)
-  const [accentColor, setAccentColor] = useState(accentOptions[0])
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [scheduleTitle, setScheduleTitle] = useState("");
+  const [profile, setProfile] = useState(defaultProfile);
+  const [accentColor, setAccentColor] = useState(accentOptions[0]);
 
-  const [candidateEntries, setCandidateEntries] = useState([])
-  const [extractedPdf, setExtractedPdf] = useState(null)
+  const [candidateEntries, setCandidateEntries] = useState([]);
+  const [extractedPdf, setExtractedPdf] = useState(null);
 
-  const [selectedScheduleId, setSelectedScheduleId] = useState(null)
-  const [isExtracting, setIsExtracting] = useState(false)
-  const [progress, setProgress] = useState(null)
-  const [feedback, setFeedback] = useState('')
-  const [error, setError] = useState('')
+  const [selectedScheduleId, setSelectedScheduleId] = useState(null);
+  const [isExtracting, setIsExtracting] = useState(false);
+  const [progress, setProgress] = useState(null);
+  const [feedback, setFeedback] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const selectedStillExists = schedules.some(
-      (schedule) => schedule.id === selectedScheduleId
-    )
+      (schedule) => schedule.id === selectedScheduleId,
+    );
 
     if (!selectedStillExists) {
-      setSelectedScheduleId(schedules.length > 0 ? schedules[0].id : null)
+      setSelectedScheduleId(schedules.length > 0 ? schedules[0].id : null);
     }
-  }, [schedules, selectedScheduleId])
+  }, [schedules, selectedScheduleId]);
 
   const selectedSchedule = schedules.find(
-    (schedule) => schedule.id === selectedScheduleId
-  )
+    (schedule) => schedule.id === selectedScheduleId,
+  );
 
   const selectedCandidateCount = candidateEntries.filter(
-    (entry) => entry.selected && isValidEntry(entry)
-  ).length
+    (entry) => entry.selected && isValidEntry(entry),
+  ).length;
 
   const allCandidatesSelected =
     candidateEntries.length > 0 &&
-    candidateEntries.every((entry) => entry.selected)
+    candidateEntries.every((entry) => entry.selected);
 
   const sortedScheduleEntries = useMemo(() => {
     if (!selectedSchedule) {
-      return []
+      return [];
     }
 
     return [...selectedSchedule.entries].sort((firstEntry, secondEntry) => {
-      const firstValue = `${firstEntry.dateIso || ''} ${firstEntry.time || ''}`
-      const secondValue = `${secondEntry.dateIso || ''} ${secondEntry.time || ''}`
+      const firstValue = `${firstEntry.dateIso || ""} ${firstEntry.time || ""}`;
+      const secondValue = `${secondEntry.dateIso || ""} ${secondEntry.time || ""}`;
 
-      return firstValue.localeCompare(secondValue)
-    })
-  }, [selectedSchedule])
+      return firstValue.localeCompare(secondValue);
+    });
+  }, [selectedSchedule]);
 
   function handleFileChange(event) {
-    const file = event.target.files?.[0] || null
+    const file = event.target.files?.[0] || null;
 
-    setSelectedFile(file)
-    setCandidateEntries([])
-    setExtractedPdf(null)
-    setError('')
-    setFeedback('')
+    setSelectedFile(file);
+    setCandidateEntries([]);
+    setExtractedPdf(null);
+    setError("");
+    setFeedback("");
 
     if (file) {
-      setScheduleTitle(file.name.replace(/\.pdf$/i, ''))
+      setScheduleTitle(file.name.replace(/\.pdf$/i, ""));
     }
   }
 
   function handleProfileChange(event) {
-    const { name, value } = event.target
+    const { name, value } = event.target;
 
     setProfile((previousProfile) => ({
       ...previousProfile,
       [name]: value,
-    }))
+    }));
   }
 
   function decorateEntries(entries) {
@@ -129,48 +129,48 @@ function PdfImportPage() {
       ...entry,
       id: `candidate-${Date.now()}-${index}`,
       selected: true,
-    }))
+    }));
   }
 
   async function handleExtractSchedule() {
     if (!selectedFile) {
-      setError('Prvo izaberi PDF fajl.')
-      return
+      setError("Prvo izaberi PDF fajl.");
+      return;
     }
 
-    setIsExtracting(true)
-    setProgress(null)
-    setError('')
-    setFeedback('')
-    setCandidateEntries([])
+    setIsExtracting(true);
+    setProgress(null);
+    setError("");
+    setFeedback("");
+    setCandidateEntries([]);
 
     try {
-      const result = await extractPdfRows(selectedFile, setProgress)
+      const result = await extractPdfRows(selectedFile, setProgress);
 
-      const parsedEntries = parseExamScheduleRows(result.rows, profile)
+      const parsedEntries = parseExamScheduleRows(result.rows, profile);
 
-      setExtractedPdf(result)
-      setCandidateEntries(decorateEntries(parsedEntries))
+      setExtractedPdf(result);
+      setCandidateEntries(decorateEntries(parsedEntries));
 
       if (parsedEntries.length === 0) {
         setFeedback(
-          'PDF je pročitan, ali nije pronađen nijedan red za izabrani profil. Promeni modul, semestar ili prefiks šifre i pokušaj ponovo.'
-        )
+          "PDF je pročitan, ali nije pronađen nijedan red za izabrani profil. Promeni modul, semestar ili prefiks šifre i pokušaj ponovo.",
+        );
       } else {
         setFeedback(
           `PDF je pročitan. Pronađeno je ${parsedEntries.length} ispita za profil: ${getProfileLabel(
-            profile
-          )}.`
-        )
+            profile,
+          )}.`,
+        );
       }
     } catch (caughtError) {
       setError(
         caughtError.message ||
-          'Došlo je do greške prilikom čitanja PDF dokumenta.'
-      )
+          "Došlo je do greške prilikom čitanja PDF dokumenta.",
+      );
     } finally {
-      setIsExtracting(false)
-      setProgress(null)
+      setIsExtracting(false);
+      setProgress(null);
     }
   }
 
@@ -182,9 +182,9 @@ function PdfImportPage() {
               ...entry,
               [field]: value,
             }
-          : entry
-      )
-    )
+          : entry,
+      ),
+    );
   }
 
   function handleToggleAllCandidates() {
@@ -192,8 +192,8 @@ function PdfImportPage() {
       previousEntries.map((entry) => ({
         ...entry,
         selected: !allCandidatesSelected,
-      }))
-    )
+      })),
+    );
   }
 
   function handleAddManualCandidate() {
@@ -204,77 +204,77 @@ function PdfImportPage() {
         id: `candidate-${Date.now()}-${previousEntries.length}`,
         selected: true,
       },
-    ])
+    ]);
   }
 
   function handleRemoveCandidate(entryId) {
     setCandidateEntries((previousEntries) =>
-      previousEntries.filter((entry) => entry.id !== entryId)
-    )
+      previousEntries.filter((entry) => entry.id !== entryId),
+    );
   }
 
   function handleSaveSchedule() {
     if (!scheduleTitle.trim()) {
-      setError('Unesi naslov rasporeda, na primer: Junski rok 2026.')
-      return
+      setError("Unesi naslov rasporeda, na primer: Junski rok 2026.");
+      return;
     }
 
     const selectedEntries = candidateEntries
       .filter((entry) => entry.selected && isValidEntry(entry))
-      .map(({ selected, ...entry }) => entry)
+      .map(({ selected, ...entry }) => entry);
 
     if (selectedEntries.length === 0) {
-      setError('Izaberi ili ručno dodaj najmanje jedan validan ispit.')
-      return
+      setError("Izaberi ili ručno dodaj najmanje jedan validan ispit.");
+      return;
     }
 
     const newSchedule = addSchedule({
       title: scheduleTitle.trim(),
-      sourceFileName: selectedFile?.name || 'Ručni unos',
+      sourceFileName: selectedFile?.name || "Ručni unos",
       profile,
       accentColor,
       entries: selectedEntries,
-    })
+    });
 
-    setSelectedScheduleId(newSchedule.id)
+    setSelectedScheduleId(newSchedule.id);
     setFeedback(
-      `Raspored „${scheduleTitle.trim()}“ je sačuvan sa ${selectedEntries.length} stavki.`
-    )
-    setError('')
-    setCandidateEntries([])
-    setExtractedPdf(null)
-    setSelectedFile(null)
-    setScheduleTitle('')
+      `Raspored „${scheduleTitle.trim()}“ je sačuvan sa ${selectedEntries.length} stavki.`,
+    );
+    setError("");
+    setCandidateEntries([]);
+    setExtractedPdf(null);
+    setSelectedFile(null);
+    setScheduleTitle("");
   }
 
   function handleDeleteSchedule(schedule) {
     const confirmed = window.confirm(
-      `Da li sigurno želiš da obrišeš raspored „${schedule.title}“?`
-    )
+      `Da li sigurno želiš da obrišeš raspored „${schedule.title}“?`,
+    );
 
     if (confirmed) {
-      deleteSchedule(schedule.id)
-      setFeedback(`Raspored „${schedule.title}“ je obrisan.`)
+      deleteSchedule(schedule.id);
+      setFeedback(`Raspored „${schedule.title}“ je obrisan.`);
     }
   }
 
   function handleAddSavedEntry() {
     if (!selectedSchedule) {
-      return
+      return;
     }
 
     addScheduleEntry(
       selectedSchedule.id,
-      createEmptyExamEntry(selectedSchedule.profile)
-    )
+      createEmptyExamEntry(selectedSchedule.profile),
+    );
   }
 
   function handleDeleteSavedEntry(entryId) {
     if (!selectedSchedule) {
-      return
+      return;
     }
 
-    deleteScheduleEntry(selectedSchedule.id, entryId)
+    deleteScheduleEntry(selectedSchedule.id, entryId);
   }
 
   return (
@@ -284,8 +284,8 @@ function PdfImportPage() {
           <p className="page-eyebrow">RASPOREDI ISPITA</p>
           <h1>Uvoz rasporeda iz PDF-a</h1>
           <p className="page-description">
-            Svaki PDF dobija svoju tabelu. Unesi naslov, proveri redove i sačuvaj
-            poseban raspored za svaki ispitni rok.
+            Svaki PDF dobija svoju tabelu. Unesi naslov, proveri redove i
+            sačuvaj poseban raspored za svaki ispitni rok.
           </p>
         </div>
       </div>
@@ -319,13 +319,13 @@ function PdfImportPage() {
             <strong>
               {selectedFile
                 ? selectedFile.name
-                : 'Klikni i izaberi PDF raspored'}
+                : "Klikni i izaberi PDF raspored"}
             </strong>
 
             <small>
               {selectedFile
                 ? `${(selectedFile.size / 1024 / 1024).toFixed(2)} MB`
-                : 'Maksimalna veličina: 15 MB'}
+                : "Maksimalna veličina: 15 MB"}
             </small>
           </label>
 
@@ -364,9 +364,7 @@ function PdfImportPage() {
         <div>
           <p className="page-eyebrow">FILTER PROFILA</p>
           <h2>Za koga se izdvajaju ispiti?</h2>
-          <p>
-            Podrazumevano je podešeno za OAS 2019, RII i 6. semestar.
-          </p>
+          <p>Podrazumevano je podešeno za OAS 2019, RII i 6. semestar.</p>
         </div>
 
         <div className="exam-schedule-profile-grid">
@@ -435,11 +433,9 @@ function PdfImportPage() {
             disabled={!selectedFile || isExtracting}
           >
             <i
-              className={`bi ${
-                isExtracting ? 'bi-arrow-repeat' : 'bi-search'
-              }`}
+              className={`bi ${isExtracting ? "bi-arrow-repeat" : "bi-search"}`}
             ></i>
-            {isExtracting ? 'Čitanje...' : 'Izdvoji ispite'}
+            {isExtracting ? "Čitanje..." : "Izdvoji ispite"}
           </button>
         </div>
       </section>
@@ -456,9 +452,7 @@ function PdfImportPage() {
           <div>
             <span
               style={{
-                width: `${
-                  (progress.currentPage / progress.totalPages) * 100
-                }%`,
+                width: `${(progress.currentPage / progress.totalPages) * 100}%`,
               }}
             ></span>
           </div>
@@ -534,6 +528,7 @@ function PdfImportPage() {
                     <th>Sale</th>
                     <th>Sem.</th>
                     <th>Modul</th>
+                    <th>Kalendar</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -548,8 +543,8 @@ function PdfImportPage() {
                           onChange={(event) =>
                             handleCandidateChange(
                               entry.id,
-                              'selected',
-                              event.target.checked
+                              "selected",
+                              event.target.checked,
                             )
                           }
                           aria-label={`Izaberi predmet ${entry.subjectName}`}
@@ -562,8 +557,8 @@ function PdfImportPage() {
                           onChange={(event) =>
                             handleCandidateChange(
                               entry.id,
-                              'courseCode',
-                              event.target.value
+                              "courseCode",
+                              event.target.value,
                             )
                           }
                         />
@@ -575,8 +570,8 @@ function PdfImportPage() {
                           onChange={(event) =>
                             handleCandidateChange(
                               entry.id,
-                              'subjectName',
-                              event.target.value
+                              "subjectName",
+                              event.target.value,
                             )
                           }
                         />
@@ -589,8 +584,8 @@ function PdfImportPage() {
                           onChange={(event) =>
                             handleCandidateChange(
                               entry.id,
-                              'dateIso',
-                              event.target.value
+                              "dateIso",
+                              event.target.value,
                             )
                           }
                         />
@@ -602,8 +597,8 @@ function PdfImportPage() {
                           onChange={(event) =>
                             handleCandidateChange(
                               entry.id,
-                              'time',
-                              event.target.value
+                              "time",
+                              event.target.value,
                             )
                           }
                         />
@@ -615,8 +610,8 @@ function PdfImportPage() {
                           onChange={(event) =>
                             handleCandidateChange(
                               entry.id,
-                              'duration',
-                              event.target.value
+                              "duration",
+                              event.target.value,
                             )
                           }
                         />
@@ -628,8 +623,8 @@ function PdfImportPage() {
                           onChange={(event) =>
                             handleCandidateChange(
                               entry.id,
-                              'rooms',
-                              event.target.value
+                              "rooms",
+                              event.target.value,
                             )
                           }
                         />
@@ -641,8 +636,8 @@ function PdfImportPage() {
                           onChange={(event) =>
                             handleCandidateChange(
                               entry.id,
-                              'semester',
-                              event.target.value
+                              "semester",
+                              event.target.value,
                             )
                           }
                         />
@@ -654,13 +649,19 @@ function PdfImportPage() {
                           onChange={(event) =>
                             handleCandidateChange(
                               entry.id,
-                              'module',
-                              event.target.value
+                              "module",
+                              event.target.value,
                             )
                           }
                         />
                       </td>
-
+                      <td>
+                        <ScheduleCalendarButton
+                          schedule={selectedSchedule}
+                          entry={entry}
+                          onFeedback={setFeedback}
+                        />
+                      </td>
                       <td>
                         <button
                           type="button"
@@ -716,15 +717,15 @@ function PdfImportPage() {
                   type="button"
                   key={schedule.id}
                   className={[
-                    'saved-schedule-item',
+                    "saved-schedule-item",
                     selectedScheduleId === schedule.id
-                      ? 'saved-schedule-item-active'
-                      : '',
+                      ? "saved-schedule-item-active"
+                      : "",
                   ]
                     .filter(Boolean)
-                    .join(' ')}
+                    .join(" ")}
                   style={{
-                    '--schedule-color': schedule.accentColor,
+                    "--schedule-color": schedule.accentColor,
                   }}
                   onClick={() => setSelectedScheduleId(schedule.id)}
                 >
@@ -733,7 +734,7 @@ function PdfImportPage() {
                   <span>
                     <strong>{schedule.title}</strong>
                     <small>
-                      {schedule.entries.length} stavki ·{' '}
+                      {schedule.entries.length} stavki ·{" "}
                       {getProfileLabel(schedule.profile)}
                     </small>
                   </span>
@@ -754,7 +755,7 @@ function PdfImportPage() {
               <div
                 className="saved-schedule-detail-heading"
                 style={{
-                  '--schedule-color': selectedSchedule.accentColor,
+                  "--schedule-color": selectedSchedule.accentColor,
                 }}
               >
                 <div>
@@ -765,14 +766,14 @@ function PdfImportPage() {
                     onChange={(event) =>
                       updateScheduleTitle(
                         selectedSchedule.id,
-                        event.target.value
+                        event.target.value,
                       )
                     }
                     aria-label="Naziv rasporeda"
                   />
 
                   <span>
-                    Fajl: {selectedSchedule.sourceFileName} ·{' '}
+                    Fajl: {selectedSchedule.sourceFileName} ·{" "}
                     {getProfileLabel(selectedSchedule.profile)}
                   </span>
                 </div>
@@ -824,8 +825,8 @@ function PdfImportPage() {
                               updateScheduleEntry(
                                 selectedSchedule.id,
                                 entry.id,
-                                'courseCode',
-                                event.target.value
+                                "courseCode",
+                                event.target.value,
                               )
                             }
                           />
@@ -838,8 +839,8 @@ function PdfImportPage() {
                               updateScheduleEntry(
                                 selectedSchedule.id,
                                 entry.id,
-                                'subjectName',
-                                event.target.value
+                                "subjectName",
+                                event.target.value,
                               )
                             }
                           />
@@ -853,8 +854,8 @@ function PdfImportPage() {
                               updateScheduleEntry(
                                 selectedSchedule.id,
                                 entry.id,
-                                'dateIso',
-                                event.target.value
+                                "dateIso",
+                                event.target.value,
                               )
                             }
                           />
@@ -867,8 +868,8 @@ function PdfImportPage() {
                               updateScheduleEntry(
                                 selectedSchedule.id,
                                 entry.id,
-                                'time',
-                                event.target.value
+                                "time",
+                                event.target.value,
                               )
                             }
                           />
@@ -881,8 +882,8 @@ function PdfImportPage() {
                               updateScheduleEntry(
                                 selectedSchedule.id,
                                 entry.id,
-                                'duration',
-                                event.target.value
+                                "duration",
+                                event.target.value,
                               )
                             }
                           />
@@ -895,8 +896,8 @@ function PdfImportPage() {
                               updateScheduleEntry(
                                 selectedSchedule.id,
                                 entry.id,
-                                'rooms',
-                                event.target.value
+                                "rooms",
+                                event.target.value,
                               )
                             }
                           />
@@ -909,8 +910,8 @@ function PdfImportPage() {
                               updateScheduleEntry(
                                 selectedSchedule.id,
                                 entry.id,
-                                'semester',
-                                event.target.value
+                                "semester",
+                                event.target.value,
                               )
                             }
                           />
@@ -923,8 +924,8 @@ function PdfImportPage() {
                               updateScheduleEntry(
                                 selectedSchedule.id,
                                 entry.id,
-                                'module',
-                                event.target.value
+                                "module",
+                                event.target.value,
                               )
                             }
                           />
@@ -934,9 +935,7 @@ function PdfImportPage() {
                           <button
                             type="button"
                             className="exam-schedule-remove-button"
-                            onClick={() =>
-                              handleDeleteSavedEntry(entry.id)
-                            }
+                            onClick={() => handleDeleteSavedEntry(entry.id)}
                             title="Obriši red"
                           >
                             <i className="bi bi-x-lg"></i>
@@ -952,15 +951,13 @@ function PdfImportPage() {
             <div className="saved-schedule-detail-empty">
               <i className="bi bi-calendar-event"></i>
               <h2>Izaberi raspored</h2>
-              <p>
-                Nakon uvoza, svaki PDF će ovde imati svoju zasebnu tabelu.
-              </p>
+              <p>Nakon uvoza, svaki PDF će ovde imati svoju zasebnu tabelu.</p>
             </div>
           )}
         </section>
       </section>
     </section>
-  )
+  );
 }
 
-export default PdfImportPage
+export default PdfImportPage;
