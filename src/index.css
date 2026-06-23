@@ -7789,3 +7789,303 @@ p {
     grid-column: 1 / -1;
   }
 }
+.focus-timer-panel {
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.12);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 8% 15%, rgba(74, 222, 128, 0.1), transparent 24%),
+    radial-gradient(circle at 88% 88%, rgba(56, 189, 248, 0.07), transparent 25%),
+    linear-gradient(145deg, rgba(20, 34, 27, 0.96), rgba(11, 22, 16, 0.97));
+}
+
+.focus-timer-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.focus-timer-heading h2 {
+  margin: 0 0 7px;
+  color: #eff9f1;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.focus-timer-heading p:not(.page-eyebrow) {
+  margin: 0;
+  color: #8fa198;
+  font-size: 0.79rem;
+}
+
+.focus-timer-session-count {
+  display: flex;
+  min-width: 90px;
+  align-items: center;
+  flex-direction: column;
+  padding: 8px 0 8px 16px;
+  border-left: 1px solid rgba(134, 239, 172, 0.1);
+}
+
+.focus-timer-session-count strong {
+  color: #8eedaa;
+  font-size: 1.38rem;
+  line-height: 1;
+}
+
+.focus-timer-session-count span {
+  margin-top: 5px;
+  color: #84978a;
+  font-size: 0.64rem;
+  text-align: center;
+}
+
+.focus-timer-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.7fr) minmax(300px, 1.3fr);
+  gap: 26px;
+  padding: 25px;
+}
+
+.focus-timer-main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.focus-timer-circle {
+  display: grid;
+  width: 190px;
+  height: 190px;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(
+    #75e99a var(--timer-progress),
+    rgba(134, 239, 172, 0.1) 0
+  );
+  box-shadow: 0 0 35px rgba(74, 222, 128, 0.08);
+}
+
+.focus-timer-circle > div {
+  display: flex;
+  width: 166px;
+  height: 166px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid rgba(134, 239, 172, 0.1);
+  border-radius: 50%;
+  background: #102117;
+}
+
+.focus-timer-circle span {
+  color: #92a69a;
+  font-size: 0.61rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+}
+
+.focus-timer-circle strong {
+  margin: 8px 0 4px;
+  color: #eff9f1;
+  font-size: 2.3rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.05em;
+}
+
+.focus-timer-circle small {
+  color: #89a092;
+  font-size: 0.7rem;
+}
+
+.focus-timer-controls {
+  display: flex;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.focus-timer-primary-button,
+.focus-timer-reset-button {
+  display: inline-flex;
+  min-height: 41px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 800;
+  transition: 0.18s ease;
+}
+
+.focus-timer-primary-button {
+  gap: 7px;
+  padding: 0 17px;
+  border: 1px solid rgba(134, 239, 172, 0.22);
+  background: rgba(74, 222, 128, 0.13);
+  color: #9cf0b7;
+  font-size: 0.76rem;
+}
+
+.focus-timer-primary-button:hover {
+  background: rgba(74, 222, 128, 0.21);
+  transform: translateY(-2px);
+}
+
+.focus-timer-reset-button {
+  width: 42px;
+  border: 1px solid rgba(134, 239, 172, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  color: #9aac9f;
+}
+
+.focus-timer-reset-button:hover {
+  color: #eff9f1;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.focus-timer-settings {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.focus-timer-setting-group > span,
+.focus-timer-task-select > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #a7baab;
+  font-size: 0.73rem;
+  font-weight: 760;
+}
+
+.focus-timer-duration-options {
+  display: flex;
+  gap: 8px;
+}
+
+.focus-timer-duration-options button {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(134, 239, 172, 0.1);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.025);
+  color: #9bad9f;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 760;
+  transition: 0.18s ease;
+}
+
+.focus-timer-duration-options button:hover,
+.focus-timer-duration-options .focus-timer-duration-active {
+  border-color: rgba(134, 239, 172, 0.3);
+  background: rgba(74, 222, 128, 0.12);
+  color: #9cf0b7;
+}
+
+.focus-timer-task-select select {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid rgba(134, 239, 172, 0.11);
+  border-radius: 10px;
+  outline: none;
+  background: rgba(8, 20, 13, 0.72);
+  color: #dcebe0;
+  font-size: 0.77rem;
+}
+
+.focus-timer-task-select select:focus {
+  border-color: rgba(134, 239, 172, 0.4);
+}
+
+.focus-timer-task-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid rgba(134, 239, 172, 0.09);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.focus-timer-task-preview > i {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(74, 222, 128, 0.1);
+  color: #86efac;
+}
+
+.focus-timer-task-preview div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.focus-timer-task-preview span {
+  color: #84978a;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.07em;
+}
+
+.focus-timer-task-preview strong {
+  overflow: hidden;
+  color: #e9f5ec;
+  font-size: 0.77rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.focus-timer-tasks-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #8eedaa;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (max-width: 800px) {
+  .focus-timer-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .focus-timer-settings {
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .focus-timer-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .focus-timer-session-count {
+    align-items: flex-start;
+    padding: 0;
+    border: 0;
+  }
+
+  .focus-timer-session-count span {
+    text-align: left;
+  }
+
+  .focus-timer-layout {
+    padding: 20px 16px;
+  }
+}

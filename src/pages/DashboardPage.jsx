@@ -6,6 +6,8 @@ import { formatDate } from '../utils/dateUtils'
 import DailyFocusPanel from '../components/DailyFocusPanel'
 import SmartStudyAssistant from '../components/SmartStudyAssistant'
 import DailyLoadInsight from "../components/DailyLoadInsight";
+import FocusTimerPanel from "../components/FocusTimerPanel";
+
 
 function DashboardPage() {
   const { subjects } = useSubjects()
@@ -170,6 +172,7 @@ function DashboardPage() {
       </div>
       <DailyFocusPanel />
       <DailyLoadInsight />
+      <FocusTimerPanel />
       <SmartStudyAssistant />
     </section>
   )
