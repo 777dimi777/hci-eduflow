@@ -1,65 +1,63 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import { toDateKey } from '../utils/dateUtils'
+import { createContext, useContext, useEffect, useState } from "react";
+import { toDateKey } from "../utils/dateUtils";
 
-const DailyPlanContext = createContext(null)
+const DailyPlanContext = createContext(null);
 
-const STORAGE_KEY = 'eduflow-daily-plans'
-const MAX_DAILY_TASKS = 5
+const STORAGE_KEY = "eduflow-daily-plans";
+const MAX_DAILY_TASKS = 5;
 
 function getTodayKey() {
-  return toDateKey(new Date())
+  return toDateKey(new Date());
 }
 
 function createEmptyPlan() {
   return {
     plannedTaskIds: [],
     completedTasks: [],
-  }
+  };
 }
 
 function normalizeTaskIds(values) {
   if (!Array.isArray(values)) {
-    return []
+    return [];
   }
 
   return [
-    ...new Set(
-      values.filter((value) => value !== null && value !== undefined)
-    ),
-  ]
+    ...new Set(values.filter((value) => value !== null && value !== undefined)),
+  ];
 }
 
 function normalizeCompletedTasks(values) {
   if (!Array.isArray(values)) {
-    return []
+    return [];
   }
 
-  const uniqueTasks = new Map()
+  const uniqueTasks = new Map();
 
   values.forEach((value) => {
     const taskId =
-      typeof value === 'object' && value !== null ? value.taskId : value
+      typeof value === "object" && value !== null ? value.taskId : value;
 
     if (taskId === null || taskId === undefined) {
-      return
+      return;
     }
 
     const previousStatus =
-      typeof value === 'object' &&
+      typeof value === "object" &&
       value !== null &&
-      typeof value.previousStatus === 'string'
+      typeof value.previousStatus === "string"
         ? value.previousStatus
-        : 'todo'
+        : "todo";
 
     if (!uniqueTasks.has(taskId)) {
       uniqueTasks.set(taskId, {
         taskId,
         previousStatus,
-      })
+      });
     }
-  })
+  });
 
-  return [...uniqueTasks.values()]
+  return [...uniqueTasks.values()];
 }
 
 function normalizePlan(rawPlan) {
@@ -67,129 +65,120 @@ function normalizePlan(rawPlan) {
     return {
       plannedTaskIds: normalizeTaskIds(rawPlan),
       completedTasks: [],
-    }
+    };
   }
 
-  if (!rawPlan || typeof rawPlan !== 'object') {
-    return createEmptyPlan()
+  if (!rawPlan || typeof rawPlan !== "object") {
+    return createEmptyPlan();
   }
 
   const completedTasks = normalizeCompletedTasks(
-    rawPlan.completedTasks || rawPlan.completedTaskIds
-  )
+    rawPlan.completedTasks || rawPlan.completedTaskIds,
+  );
 
-  const completedTaskIds = new Set(
-    completedTasks.map((task) => task.taskId)
-  )
+  const completedTaskIds = new Set(completedTasks.map((task) => task.taskId));
 
   return {
     plannedTaskIds: normalizeTaskIds(rawPlan.plannedTaskIds).filter(
-      (taskId) => !completedTaskIds.has(taskId)
+      (taskId) => !completedTaskIds.has(taskId),
     ),
     completedTasks,
-  }
+  };
 }
 
 function hasPlanData(plan) {
-  return (
-    plan.plannedTaskIds.length > 0 ||
-    plan.completedTasks.length > 0
-  )
+  return plan.plannedTaskIds.length > 0 || plan.completedTasks.length > 0;
 }
 
 function loadDailyPlans() {
-  const savedPlans = localStorage.getItem(STORAGE_KEY)
+  const savedPlans = localStorage.getItem(STORAGE_KEY);
 
   if (!savedPlans) {
-    return {}
+    return {};
   }
 
   try {
-    const parsedPlans = JSON.parse(savedPlans)
-    const todayKey = getTodayKey()
+    const parsedPlans = JSON.parse(savedPlans);
+    const todayKey = getTodayKey();
 
     const rawTodayPlan =
       parsedPlans?.[todayKey] ||
       (parsedPlans?.plannedTaskIds || parsedPlans?.completedTasks
         ? parsedPlans
-        : null)
+        : null);
 
-    const todayPlan = normalizePlan(rawTodayPlan)
+    const todayPlan = normalizePlan(rawTodayPlan);
 
-    return hasPlanData(todayPlan)
-      ? { [todayKey]: todayPlan }
-      : {}
+    return hasPlanData(todayPlan) ? { [todayKey]: todayPlan } : {};
   } catch {
-    return {}
+    return {};
   }
 }
 
 export function DailyPlanProvider({ children }) {
-  const [todayKey, setTodayKey] = useState(getTodayKey)
-  const [dailyPlans, setDailyPlans] = useState(loadDailyPlans)
+  const [todayKey, setTodayKey] = useState(getTodayKey);
+  const [dailyPlans, setDailyPlans] = useState(loadDailyPlans);
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
-      const nextDateKey = getTodayKey()
+      const nextDateKey = getTodayKey();
 
       setTodayKey((previousDateKey) =>
-        previousDateKey === nextDateKey
-          ? previousDateKey
-          : nextDateKey
-      )
-    }, 60000)
+        previousDateKey === nextDateKey ? previousDateKey : nextDateKey,
+      );
+    }, 60000);
 
-    return () => window.clearInterval(intervalId)
-  }, [])
+    return () => window.clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     setDailyPlans((previousPlans) => {
-      const currentPlan = normalizePlan(previousPlans[todayKey])
+      const currentPlan = normalizePlan(previousPlans[todayKey]);
 
       if (!hasPlanData(currentPlan)) {
-        return {}
+        return {};
       }
 
       return {
         [todayKey]: currentPlan,
-      }
-    })
-  }, [todayKey])
+      };
+    });
+  }, [todayKey]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(dailyPlans))
-  }, [dailyPlans])
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dailyPlans));
+  }, [dailyPlans]);
 
   function getPlan(dateKey) {
-    return normalizePlan(dailyPlans[dateKey])
+    return normalizePlan(dailyPlans[dateKey]);
   }
 
   function getPlanTaskIds(dateKey) {
-    return getPlan(dateKey).plannedTaskIds
+    return getPlan(dateKey).plannedTaskIds;
   }
 
   function getCompletedTaskEntries(dateKey) {
-    return getPlan(dateKey).completedTasks
+    return getPlan(dateKey).completedTasks;
   }
 
   function addTaskToPlan(dateKey, taskId) {
-    const currentPlan = getPlan(dateKey)
+    const currentPlan = getPlan(dateKey);
 
     const selectedTaskIds = [
       ...currentPlan.plannedTaskIds,
       ...currentPlan.completedTasks.map((task) => task.taskId),
-    ]
+    ];
 
     if (selectedTaskIds.includes(taskId)) {
-      return { added: false, reason: 'exists' }
+      return { added: false, reason: "exists" };
     }
 
     if (selectedTaskIds.length >= MAX_DAILY_TASKS) {
-      return { added: false, reason: 'limit' }
+      return { added: false, reason: "limit" };
     }
 
     setDailyPlans((previousPlans) => {
-      const plan = normalizePlan(previousPlans[dateKey])
+      const plan = normalizePlan(previousPlans[dateKey]);
 
       return {
         ...previousPlans,
@@ -197,27 +186,27 @@ export function DailyPlanProvider({ children }) {
           ...plan,
           plannedTaskIds: [...plan.plannedTaskIds, taskId],
         },
-      }
-    })
+      };
+    });
 
-    return { added: true }
+    return { added: true };
   }
 
   function completeTaskInPlan(dateKey, taskId, previousStatus) {
-    const currentPlan = getPlan(dateKey)
+    const currentPlan = getPlan(dateKey);
 
     if (!currentPlan.plannedTaskIds.includes(taskId)) {
-      return { moved: false }
+      return { moved: false };
     }
 
     setDailyPlans((previousPlans) => {
-      const plan = normalizePlan(previousPlans[dateKey])
+      const plan = normalizePlan(previousPlans[dateKey]);
 
       return {
         ...previousPlans,
         [dateKey]: {
           plannedTaskIds: plan.plannedTaskIds.filter(
-            (plannedTaskId) => plannedTaskId !== taskId
+            (plannedTaskId) => plannedTaskId !== taskId,
           ),
           completedTasks: [
             ...plan.completedTasks,
@@ -227,71 +216,96 @@ export function DailyPlanProvider({ children }) {
             },
           ],
         },
-      }
-    })
+      };
+    });
 
-    return { moved: true }
+    return { moved: true };
   }
 
   function reopenTaskInPlan(dateKey, taskId) {
-    const currentPlan = getPlan(dateKey)
+    const currentPlan = getPlan(dateKey);
 
     const completedTask = currentPlan.completedTasks.find(
-      (task) => task.taskId === taskId
-    )
+      (task) => task.taskId === taskId,
+    );
 
     if (!completedTask) {
-      return { moved: false }
+      return { moved: false };
     }
 
     setDailyPlans((previousPlans) => {
-      const plan = normalizePlan(previousPlans[dateKey])
+      const plan = normalizePlan(previousPlans[dateKey]);
 
       return {
         ...previousPlans,
         [dateKey]: {
           plannedTaskIds: [...plan.plannedTaskIds, taskId],
           completedTasks: plan.completedTasks.filter(
-            (task) => task.taskId !== taskId
+            (task) => task.taskId !== taskId,
           ),
         },
-      }
-    })
+      };
+    });
 
     return {
       moved: true,
       previousStatus: completedTask.previousStatus,
-    }
+    };
   }
 
   function removeTaskFromPlan(dateKey, taskId) {
     setDailyPlans((previousPlans) => {
-      const plan = normalizePlan(previousPlans[dateKey])
+      const plan = normalizePlan(previousPlans[dateKey]);
 
       return {
         ...previousPlans,
         [dateKey]: {
           plannedTaskIds: plan.plannedTaskIds.filter(
-            (plannedTaskId) => plannedTaskId !== taskId
+            (plannedTaskId) => plannedTaskId !== taskId,
           ),
           completedTasks: plan.completedTasks.filter(
-            (task) => task.taskId !== taskId
+            (task) => task.taskId !== taskId,
           ),
         },
-      }
-    })
+      };
+    });
   }
 
   function clearDailyPlan(dateKey) {
     setDailyPlans((previousPlans) => {
-      const updatedPlans = { ...previousPlans }
+      const updatedPlans = { ...previousPlans };
 
-      delete updatedPlans[dateKey]
+      delete updatedPlans[dateKey];
 
-      return updatedPlans
-    })
+      return updatedPlans;
+    });
   }
+  function removeTasksFromPlans(taskIds) {
+    const taskIdSet = new Set(taskIds);
 
+    setDailyPlans((previousPlans) => {
+      const updatedPlans = {};
+
+      Object.entries(previousPlans).forEach(([dateKey, rawPlan]) => {
+        const plan = normalizePlan(rawPlan);
+
+        const updatedPlan = {
+          plannedTaskIds: plan.plannedTaskIds.filter(
+            (taskId) => !taskIdSet.has(taskId),
+          ),
+          completedTasks: plan.completedTasks.filter(
+            (task) => !taskIdSet.has(task.taskId),
+          ),
+        };
+
+        if (hasPlanData(updatedPlan)) {
+          updatedPlans[dateKey] = updatedPlan;
+        }
+      });
+
+      return updatedPlans;
+    });
+  }
   return (
     <DailyPlanContext.Provider
       value={{
@@ -304,21 +318,22 @@ export function DailyPlanProvider({ children }) {
         removeTaskFromPlan,
         clearDailyPlan,
         maxDailyTasks: MAX_DAILY_TASKS,
+        removeTasksFromPlans,
       }}
     >
       {children}
     </DailyPlanContext.Provider>
-  )
+  );
 }
 
 export function useDailyPlan() {
-  const context = useContext(DailyPlanContext)
+  const context = useContext(DailyPlanContext);
 
   if (!context) {
     throw new Error(
-      'useDailyPlan mora da se koristi unutar DailyPlanProvider komponente.'
-    )
+      "useDailyPlan mora da se koristi unutar DailyPlanProvider komponente.",
+    );
   }
 
-  return context
+  return context;
 }

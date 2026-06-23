@@ -2,7 +2,7 @@ import { useTasks } from '../context/TaskContext'
 import { formatDate } from '../utils/dateUtils'
 import { getSubjectColorValue } from '../utils/subjectColorUtils'
 
-function SubjectCard({ subject, onDelete, onEdit }) {
+function SubjectCard({ subject, onDelete, onEdit, isDeleting }) {
   const { tasks } = useTasks()
 
   const activeTasks = tasks.filter(
@@ -15,7 +15,12 @@ function SubjectCard({ subject, onDelete, onEdit }) {
 
   return (
     <article
-      className="subject-card"
+      className={[
+        'subject-card',
+        isDeleting ? 'subject-card-leaving' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       style={{
         '--subject-color': getSubjectColorValue(subject.color),
       }}
@@ -33,6 +38,7 @@ function SubjectCard({ subject, onDelete, onEdit }) {
             onClick={() => onEdit(subject)}
             aria-label={`Izmeni predmet ${subject.name}`}
             title="Izmeni predmet"
+            disabled={isDeleting}
           >
             <i className="bi bi-pencil-square"></i>
           </button>
@@ -43,6 +49,7 @@ function SubjectCard({ subject, onDelete, onEdit }) {
             onClick={() => onDelete(subject)}
             aria-label={`Obriši predmet ${subject.name}`}
             title="Obriši predmet"
+            disabled={isDeleting}
           >
             <i className="bi bi-trash3"></i>
           </button>

@@ -1,17 +1,27 @@
 import { useMemo, useState } from 'react'
 import SubjectCard from '../components/SubjectCard'
+import SubjectDeleteModal from '../components/SubjectDeleteModal'
 import SubjectForm from '../components/SubjectForm'
+import { useDailyPlan } from '../context/DailyPlanContext'
 import { useSubjects } from '../context/SubjectContext'
+import { useTasks } from '../context/TaskContext'
 import { subjectColorOptions } from '../utils/subjectColorUtils'
 
 function SubjectsPage() {
   const { subjects, addSubject, updateSubject, deleteSubject } = useSubjects()
+
+  const { tasks, deleteTasksBySubjectId } = useTasks()
+
+  const { removeTasksFromPlans } = useDailyPlan()
 
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedSemester, setSelectedSemester] = useState('all')
   const [showForm, setShowForm] = useState(false)
   const [editingSubject, setEditingSubject] = useState(null)
   const [feedback, setFeedback] = useState('')
+  const [subjectPendingDelete, setSubjectPendingDelete] = useState(null)
+  const [isDeletingSubject, setIsDeletingSubject] = useState(false)
+  const [leavingSubjectIds, setLeavingSubjectIds] = useState([])
 
   const semesters = useMemo(() => {
     return [...new Set(subjects.map((subject) => subject.semester))].sort(
@@ -46,6 +56,16 @@ function SubjectsPage() {
     })
   }, [subjects, searchTerm, selectedSemester])
 
+  const linkedTasks = useMemo(() => {
+    if (!subjectPendingDelete) {
+      return []
+    }
+
+    return tasks.filter(
+      (task) => task.subjectId === subjectPendingDelete.id
+    )
+  }, [tasks, subjectPendingDelete])
+
   function closeForm() {
     setShowForm(false)
     setEditingSubject(null)
@@ -77,15 +97,51 @@ function SubjectsPage() {
     closeForm()
   }
 
-  function handleDeleteSubject(subject) {
-    const isConfirmed = window.confirm(
-      `Da li sigurno želiš da obrišeš predmet "${subject.name}"?`
-    )
+  function handleOpenDeleteModal(subject) {
+    setSubjectPendingDelete(subject)
+    setFeedback('')
+  }
 
-    if (isConfirmed) {
-      deleteSubject(subject.id)
-      setFeedback(`Predmet „${subject.name}“ je obrisan.`)
+  function handleCloseDeleteModal() {
+    if (!isDeletingSubject) {
+      setSubjectPendingDelete(null)
     }
+  }
+
+  function handleConfirmDeleteSubject() {
+    if (!subjectPendingDelete) {
+      return
+    }
+
+    const subjectId = subjectPendingDelete.id
+    const subjectName = subjectPendingDelete.name
+    const taskIdsToDelete = linkedTasks.map((task) => task.id)
+    const taskCount = taskIdsToDelete.length
+
+    setIsDeletingSubject(true)
+
+    setLeavingSubjectIds((previousIds) => [
+      ...new Set([...previousIds, subjectId]),
+    ])
+
+    window.setTimeout(() => {
+      deleteTasksBySubjectId(subjectId)
+      removeTasksFromPlans(taskIdsToDelete)
+      deleteSubject(subjectId)
+
+      setLeavingSubjectIds((previousIds) =>
+        previousIds.filter((id) => id !== subjectId)
+      )
+
+      setSubjectPendingDelete(null)
+      setIsDeletingSubject(false)
+
+      setFeedback(
+        taskCount === 0
+          ? `Predmet „${subjectName}“ je obrisan.`
+          : `Predmet „${subjectName}“ i ${taskCount} povezane obaveze su obrisani.`
+      )
+    }, 280)
   }
 
   return (
@@ -95,8 +151,8 @@ function SubjectsPage() {
           <p className="page-eyebrow">ORGANIZACIJA UČENJA</p>
           <h1>Predmeti</h1>
           <p className="page-description">
-            Dodaj svoje predmete, menjaj njihov napredak i koristi različite boje
-            za lakše snalaženje.
+            Dodaj svoje predmete, menjaj njihov napredak i koristi različite
+            boje za lakše snalaženje.
           </p>
         </div>
 
@@ -169,7 +225,8 @@ function SubjectsPage() {
               key={subject.id}
               subject={subject}
               onEdit={handleOpenEditForm}
-              onDelete={handleDeleteSubject}
+              onDelete={handleOpenDeleteModal}
+              isDeleting={leavingSubjectIds.includes(subject.id)}
             />
           ))}
         </div>
@@ -180,6 +237,14 @@ function SubjectsPage() {
           <p>Promeni pretragu, filter ili dodaj novi predmet u planer.</p>
         </div>
       )}
+
+      <SubjectDeleteModal
+        subject={subjectPendingDelete}
+        linkedTasks={linkedTasks}
+        isDeleting={isDeletingSubject}
+        onCancel={handleCloseDeleteModal}
+        onConfirm={handleConfirmDeleteSubject}
+      />
     </section>
   )
 }
