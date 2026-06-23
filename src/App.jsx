@@ -5,6 +5,7 @@ import SectionPage from "./pages/SectionPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SubjectsPage from "./pages/SubjectsPage";
 import TasksPage from './pages/TasksPage'
+import CalendarPage from './pages/CalendarPage'
 function App() {
   return (
     <Routes>
@@ -17,16 +18,7 @@ function App() {
 
        <Route path="/tasks" element={<TasksPage />} />
 
-        <Route
-          path="/calendar"
-          element={
-            <SectionPage
-              title="Kalendar"
-              description="Ovde će se prikazivati rokovi, kolokvijumi, ispiti i važni datumi."
-              icon="bi-calendar-event"
-            />
-          }
-        />
+       <Route path="/calendar" element={<CalendarPage />} />
 
         <Route
           path="/materials"
