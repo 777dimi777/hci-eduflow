@@ -1,69 +1,69 @@
-import { useMemo, useState } from 'react'
-import { Link } from 'react-router'
-import { useDailyPlan } from '../context/DailyPlanContext'
-import { useSubjects } from '../context/SubjectContext'
-import { useTasks } from '../context/TaskContext'
-import { formatDate, parseDateKey } from '../utils/dateUtils'
-import { getSubjectColorValue } from '../utils/subjectColorUtils'
-
+import { useMemo, useState } from "react";
+import { Link } from "react-router";
+import { useDailyPlan } from "../context/DailyPlanContext";
+import { useSubjects } from "../context/SubjectContext";
+import { useTasks } from "../context/TaskContext";
+import { formatDate, parseDateKey } from "../utils/dateUtils";
+import { getSubjectColorValue } from "../utils/subjectColorUtils";
+import { useToast } from "../context/ToastContext";
 const priorityScore = {
   high: 3,
   medium: 2,
   low: 1,
-}
+};
 
 function getDaysUntil(dateValue) {
-  const taskDate = parseDateKey(dateValue)
-  const today = new Date()
+  const taskDate = parseDateKey(dateValue);
+  const today = new Date();
 
-  today.setHours(0, 0, 0, 0)
+  today.setHours(0, 0, 0, 0);
 
   if (!taskDate) {
-    return 999
+    return 999;
   }
 
-  return Math.round((taskDate - today) / (1000 * 60 * 60 * 24))
+  return Math.round((taskDate - today) / (1000 * 60 * 60 * 24));
 }
 
 function getTaskUrgency(task) {
-  const daysUntil = getDaysUntil(task.dueDate)
+  const daysUntil = getDaysUntil(task.dueDate);
 
   if (daysUntil < 0) {
-    return 1000 + Math.abs(daysUntil) * 10 + priorityScore[task.priority]
+    return 1000 + Math.abs(daysUntil) * 10 + priorityScore[task.priority];
   }
 
   if (daysUntil === 0) {
-    return 900 + priorityScore[task.priority]
+    return 900 + priorityScore[task.priority];
   }
 
   if (daysUntil <= 3) {
-    return 800 - daysUntil * 10 + priorityScore[task.priority]
+    return 800 - daysUntil * 10 + priorityScore[task.priority];
   }
 
-  return 500 - Math.min(daysUntil, 100) + priorityScore[task.priority]
+  return 500 - Math.min(daysUntil, 100) + priorityScore[task.priority];
 }
 
 function getUrgencyText(task) {
-  const daysUntil = getDaysUntil(task.dueDate)
+  const daysUntil = getDaysUntil(task.dueDate);
 
   if (daysUntil < 0) {
-    return 'Rok je prošao'
+    return "Rok je prošao";
   }
 
   if (daysUntil === 0) {
-    return 'Rok je danas'
+    return "Rok je danas";
   }
 
   if (daysUntil === 1) {
-    return 'Rok je sutra'
+    return "Rok je sutra";
   }
 
-  return `Rok: ${formatDate(task.dueDate)}`
+  return `Rok: ${formatDate(task.dueDate)}`;
 }
 
 function DailyFocusPanel() {
-  const { subjects } = useSubjects()
-  const { tasks, updateTaskStatus } = useTasks()
+  const { subjects } = useSubjects();
+  const { tasks, updateTaskStatus } = useTasks();
 
   const {
     todayKey,
@@ -75,20 +75,20 @@ function DailyFocusPanel() {
     removeTaskFromPlan,
     clearDailyPlan,
     maxDailyTasks,
-  } = useDailyPlan()
+  } = useDailyPlan();
 
-  const [feedback, setFeedback] = useState('')
-
+  const [feedback, setFeedback] = useState("");
+  const { showToast } = useToast();
   const subjectMap = useMemo(() => {
-    return new Map(subjects.map((subject) => [subject.id, subject]))
-  }, [subjects])
+    return new Map(subjects.map((subject) => [subject.id, subject]));
+  }, [subjects]);
 
   const taskMap = useMemo(() => {
-    return new Map(tasks.map((task) => [task.id, task]))
-  }, [tasks])
+    return new Map(tasks.map((task) => [task.id, task]));
+  }, [tasks]);
 
-  const plannedTaskIds = getPlanTaskIds(todayKey)
-  const completedTaskEntries = getCompletedTaskEntries(todayKey)
+  const plannedTaskIds = getPlanTaskIds(todayKey);
+  const completedTaskEntries = getCompletedTaskEntries(todayKey);
 
   const plannedTasks = useMemo(() => {
     return plannedTaskIds
@@ -96,112 +96,114 @@ function DailyFocusPanel() {
       .filter(Boolean)
       .sort(
         (firstTask, secondTask) =>
-          getTaskUrgency(secondTask) - getTaskUrgency(firstTask)
-      )
-  }, [plannedTaskIds, taskMap])
+          getTaskUrgency(secondTask) - getTaskUrgency(firstTask),
+      );
+  }, [plannedTaskIds, taskMap]);
 
   const completedTasks = useMemo(() => {
     return completedTaskEntries
       .map((entry) => {
-        const task = taskMap.get(entry.taskId)
+        const task = taskMap.get(entry.taskId);
 
         return task
           ? {
               ...task,
               previousStatus: entry.previousStatus,
             }
-          : null
+          : null;
       })
-      .filter(Boolean)
-  }, [completedTaskEntries, taskMap])
+      .filter(Boolean);
+  }, [completedTaskEntries, taskMap]);
 
   const completedTaskIds = new Set(
-    completedTaskEntries.map((entry) => entry.taskId)
-  )
+    completedTaskEntries.map((entry) => entry.taskId),
+  );
 
-  const plannedTaskIdSet = new Set(plannedTaskIds)
+  const plannedTaskIdSet = new Set(plannedTaskIds);
 
   const recommendedTasks = useMemo(() => {
     return tasks
       .filter(
         (task) =>
-          task.status !== 'done' &&
+          task.status !== "done" &&
           !plannedTaskIdSet.has(task.id) &&
-          !completedTaskIds.has(task.id)
+          !completedTaskIds.has(task.id),
       )
       .sort(
         (firstTask, secondTask) =>
-          getTaskUrgency(secondTask) - getTaskUrgency(firstTask)
+          getTaskUrgency(secondTask) - getTaskUrgency(firstTask),
       )
-      .slice(0, 5)
-  }, [tasks, plannedTaskIds, completedTaskEntries])
+      .slice(0, 5);
+  }, [tasks, plannedTaskIds, completedTaskEntries]);
 
-  const totalFocusedTasks = plannedTasks.length + completedTasks.length
+  const totalFocusedTasks = plannedTasks.length + completedTasks.length;
 
   function getSubject(task) {
-    return subjectMap.get(task.subjectId)
+    return subjectMap.get(task.subjectId);
   }
 
   function getSubjectName(task) {
-    const subject = getSubject(task)
+    const subject = getSubject(task);
 
-    return subject
-      ? `${subject.code} — ${subject.name}`
-      : 'Obrisani predmet'
+    return subject ? `${subject.code} — ${subject.name}` : "Obrisani predmet";
   }
 
   function getTaskColor(task) {
-    const subject = getSubject(task)
+    const subject = getSubject(task);
 
-    return subject ? getSubjectColorValue(subject.color) : '#94a3b8'
+    return subject ? getSubjectColorValue(subject.color) : "#94a3b8";
   }
 
   function handleAddToPlan(task) {
-    const result = addTaskToPlan(todayKey, task.id)
+    const result = addTaskToPlan(todayKey, task.id);
 
     if (result.added) {
-      setFeedback(`Obaveza „${task.title}“ je dodata u današnji fokus.`)
-      return
+      setFeedback(`Obaveza „${task.title}“ je dodata u današnji fokus.`);
+      return;
     }
 
-    if (result.reason === 'limit') {
+    if (result.reason === "limit") {
       setFeedback(
-        `Dnevni fokus može da sadrži najviše ${maxDailyTasks} obaveza.`
-      )
+        `Dnevni fokus može da sadrži najviše ${maxDailyTasks} obaveza.`,
+      );
     }
   }
 
   function handleCompleteTask(task) {
-    const result = completeTaskInPlan(
-      todayKey,
-      task.id,
-      task.status
-    )
+    const result = completeTaskInPlan(todayKey, task.id, task.status);
 
     if (!result.moved) {
-      return
+      return;
     }
 
-    updateTaskStatus(task.id, 'done')
+    updateTaskStatus(task.id, "done");
 
-    setFeedback(`Odlično! „${task.title}“ je prebačen u urađene obaveze.`)
+    setFeedback(`Odlično! „${task.title}“ je prebačen u urađene obaveze.`);
+    showToast({
+      message: `Odlično! „${task.title}“ je označen kao urađen danas.`,
+      type: "success",
+    });
   }
 
   function handleReopenTask(task) {
-    const result = reopenTaskInPlan(todayKey, task.id)
+    const result = reopenTaskInPlan(todayKey, task.id);
 
     if (!result.moved) {
-      return
+      return;
     }
 
-    updateTaskStatus(task.id, result.previousStatus || 'todo')
+    updateTaskStatus(task.id, result.previousStatus || "todo");
 
-    setFeedback(`„${task.title}“ je vraćen među obaveze za danas.`)
+    setFeedback(`„${task.title}“ je vraćen među obaveze za danas.`);
+    showToast({
+      message: `„${task.title}“ je vraćen među današnje obaveze.`,
+      type: "info",
+    });
   }
 
   function handleClearPlan() {
-    clearDailyPlan(todayKey)
-    setFeedback('Dnevni fokus je očišćen.')
+    clearDailyPlan(todayKey);
+    setFeedback("Dnevni fokus je očišćen.");
   }
 
   return (
@@ -240,7 +242,7 @@ function DailyFocusPanel() {
         </p>
       )}
 
-      {tasks.filter((task) => task.status !== 'done').length === 0 &&
+      {tasks.filter((task) => task.status !== "done").length === 0 &&
       completedTasks.length === 0 ? (
         <div className="daily-focus-empty-state">
           <div className="daily-focus-empty-icon">
@@ -269,7 +271,7 @@ function DailyFocusPanel() {
                   <article
                     key={task.id}
                     className="daily-focus-task daily-focus-task-selected"
-                    style={{ '--subject-color': getTaskColor(task) }}
+                    style={{ "--subject-color": getTaskColor(task) }}
                   >
                     <button
                       type="button"
@@ -335,7 +337,7 @@ function DailyFocusPanel() {
                     <article
                       key={task.id}
                       className="daily-focus-task daily-focus-task-completed"
-                      style={{ '--subject-color': getTaskColor(task) }}
+                      style={{ "--subject-color": getTaskColor(task) }}
                     >
                       <button
                         type="button"
@@ -384,7 +386,7 @@ function DailyFocusPanel() {
                   <article
                     key={task.id}
                     className="daily-focus-task"
-                    style={{ '--subject-color': getTaskColor(task) }}
+                    style={{ "--subject-color": getTaskColor(task) }}
                   >
                     <div className="daily-focus-task-content">
                       <span className="daily-focus-subject">
@@ -420,7 +422,7 @@ function DailyFocusPanel() {
         </div>
       )}
     </section>
-  )
+  );
 }
 
-export default DailyFocusPanel
+export default DailyFocusPanel;

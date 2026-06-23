@@ -13,6 +13,7 @@ import { AcademicProvider } from "./context/AcademicContext";
 import { GradeGoalProvider } from "./context/GradeGoalContext";
 import { MaterialProvider } from "./context/MaterialContext";
 import { ExamScheduleProvider } from "./context/ExamScheduleContext";
+import { ToastProvider } from "./context/ToastContext";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
@@ -23,7 +24,9 @@ createRoot(document.getElementById("root")).render(
               <GradeGoalProvider>
                 <MaterialProvider>
                   <ExamScheduleProvider>
-                    <App />
+                    <ToastProvider>
+                      <App />
+                    </ToastProvider>
                   </ExamScheduleProvider>
                 </MaterialProvider>
               </GradeGoalProvider>
