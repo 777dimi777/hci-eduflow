@@ -11,8 +11,8 @@ import UpcomingDeadlinesPanel from "../components/UpcomingDeadlinesPanel";
 import DataBackupPanel from "../components/DataBackupPanel";
 import GettingStartedPanel from "../components/GettingStartedPanel";
 import NextExamCountdown from "../components/NextExamCountdown";
-
-
+import FocusConsistencyPanel from "../components/FocusConsistencyPanel";
+import DailyReflectionPanel from "../components/DailyReflectionPanel";
 
 function DashboardPage() {
   const { subjects } = useSubjects();
@@ -180,6 +180,7 @@ function DashboardPage() {
       <DailyFocusPanel />
       <DailyLoadInsight />
       <FocusTimerPanel />
+      <DailyReflectionPanel />
       <SmartStudyAssistant />
       <UpcomingDeadlinesPanel />
       <DataBackupPanel />

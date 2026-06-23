@@ -9884,4 +9884,270 @@ html.eduflow-enhanced-focus :focus-visible {
   .focus-consistency-day small {
     display: none;
   }
+}.daily-reflection-panel {
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(134, 239, 172, 0.12);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 90% 8%, rgba(192, 132, 252, 0.08), transparent 28%),
+    linear-gradient(145deg, rgba(20, 34, 27, 0.96), rgba(11, 22, 16, 0.97));
+}
+
+.daily-reflection-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.daily-reflection-heading h2 {
+  margin: 0 0 7px;
+  color: #eff9f1;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.daily-reflection-heading p:not(.page-eyebrow) {
+  margin: 0;
+  color: #8fa198;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.daily-reflection-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  border: 1px solid rgba(192, 132, 252, 0.18);
+  border-radius: 10px;
+  background: rgba(192, 132, 252, 0.08);
+  color: #dfc5ff;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.daily-reflection-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.daily-reflection-summary article {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 21px;
+  border-right: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.daily-reflection-summary article:last-child {
+  border-right: 0;
+}
+
+.daily-reflection-summary article > i {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 11px;
+  background: rgba(74, 222, 128, 0.1);
+  color: #86efac;
+}
+
+.daily-reflection-summary article:nth-child(2) > i {
+  background: rgba(56, 189, 248, 0.1);
+  color: #7dd3fc;
+}
+
+.daily-reflection-summary article:nth-child(3) > i {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fde68a;
+}
+
+.daily-reflection-summary article > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.daily-reflection-summary strong {
+  color: #eff9f1;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.daily-reflection-summary span {
+  color: #84978a;
+  font-size: 0.66rem;
+}
+
+.daily-reflection-completed-tasks {
+  padding: 15px 21px;
+  border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+}
+
+.daily-reflection-completed-tasks > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #83968a;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.daily-reflection-completed-tasks > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.daily-reflection-completed-tasks small {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(74, 222, 128, 0.08);
+  color: #b9d6c0;
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.daily-reflection-completed-tasks small i {
+  color: #86efac;
+}
+
+.daily-reflection-body {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  padding: 21px;
+}
+
+.daily-reflection-moods > span,
+.daily-reflection-note > span {
+  display: block;
+  margin-bottom: 9px;
+  color: #a8baac;
+  font-size: 0.74rem;
+  font-weight: 760;
+}
+
+.daily-reflection-moods > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.daily-reflection-moods button {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 11px;
+  border: 1px solid rgba(134, 239, 172, 0.1);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.025);
+  color: #9bad9f;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 760;
+  transition: 0.18s ease;
+}
+
+.daily-reflection-moods button:hover,
+.daily-reflection-moods .daily-reflection-mood-active {
+  border-color: rgba(192, 132, 252, 0.35);
+  background: rgba(192, 132, 252, 0.11);
+  color: #ebd8ff;
+}
+
+.daily-reflection-note {
+  position: relative;
+}
+
+.daily-reflection-note textarea {
+  width: 100%;
+  min-height: 98px;
+  resize: vertical;
+  padding: 12px 12px 24px;
+  border: 1px solid rgba(134, 239, 172, 0.12);
+  border-radius: 11px;
+  outline: none;
+  background: rgba(5, 15, 9, 0.54);
+  color: #e5f2e8;
+  font: inherit;
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+.daily-reflection-note textarea::placeholder {
+  color: #6f8374;
+}
+
+.daily-reflection-note textarea:focus {
+  border-color: rgba(192, 132, 252, 0.45);
+}
+
+.daily-reflection-note > small {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  color: #738578;
+  font-size: 0.63rem;
+}
+
+.daily-reflection-save-button {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  align-self: flex-start;
+  padding: 0 14px;
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  border-radius: 10px;
+  background: rgba(192, 132, 252, 0.12);
+  color: #ead6ff;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 800;
+  transition: 0.18s ease;
+}
+
+.daily-reflection-save-button:hover {
+  background: rgba(192, 132, 252, 0.2);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+  .daily-reflection-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .daily-reflection-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .daily-reflection-summary article {
+    border-right: 0;
+    border-bottom: 1px solid rgba(134, 239, 172, 0.08);
+  }
+
+  .daily-reflection-summary article:last-child {
+    border-bottom: 0;
+  }
+
+  .daily-reflection-body,
+  .daily-reflection-completed-tasks {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
 }
