@@ -1,15 +1,20 @@
-import { NavLink } from 'react-router'
+import { NavLink } from "react-router";
 
 const mainNavigation = [
-  { to: '/dashboard', icon: 'bi-grid-1x2-fill', label: 'Dashboard' },
-  { to: '/subjects', icon: 'bi-book', label: 'Predmeti' },
-  { to: '/tasks', icon: 'bi-check2-square', label: 'Obaveze' },
-  { to: '/calendar', icon: 'bi-calendar-event', label: 'Kalendar' },
-  { to: '/materials', icon: 'bi-folder2-open', label: 'Materijali' },
-  { to: '/exams', icon: 'bi-patch-check', label: 'Ispiti i prosek' },
-  { to: '/grade-goal', icon: 'bi-bullseye', label: 'Cilj proseka' },
-  { to: '/statistics', icon: 'bi-bar-chart-line', label: 'Statistika' },
-]
+  { to: "/dashboard", icon: "bi-grid-1x2-fill", label: "Dashboard" },
+  { to: "/subjects", icon: "bi-book", label: "Predmeti" },
+  { to: "/tasks", icon: "bi-check2-square", label: "Obaveze" },
+  { to: "/calendar", icon: "bi-calendar-event", label: "Kalendar" },
+  { to: "/materials", icon: "bi-folder2-open", label: "Materijali" },
+  {
+    to: "/pdf-import",
+    icon: "bi-calendar2-week",
+    label: "Rasporedi ispita",
+  },
+  { to: "/exams", icon: "bi-patch-check", label: "Ispiti i prosek" },
+  { to: "/grade-goal", icon: "bi-bullseye", label: "Cilj proseka" },
+  { to: "/statistics", icon: "bi-bar-chart-line", label: "Statistika" },
+];
 
 function Sidebar() {
   return (
@@ -30,7 +35,7 @@ function Sidebar() {
             key={item.to}
             to={item.to}
             className={({ isActive }) =>
-              `sidebar-link ${isActive ? 'sidebar-link-active' : ''}`
+              `sidebar-link ${isActive ? "sidebar-link-active" : ""}`
             }
           >
             <i className={`bi ${item.icon}`}></i>
@@ -44,7 +49,7 @@ function Sidebar() {
       <NavLink
         to="/pdf-import"
         className={({ isActive }) =>
-          `sidebar-link ${isActive ? 'sidebar-link-active' : ''}`
+          `sidebar-link ${isActive ? "sidebar-link-active" : ""}`
         }
       >
         <i className="bi bi-file-earmark-pdf"></i>
@@ -54,7 +59,7 @@ function Sidebar() {
       <NavLink
         to="/settings"
         className={({ isActive }) =>
-          `sidebar-link ${isActive ? 'sidebar-link-active' : ''}`
+          `sidebar-link ${isActive ? "sidebar-link-active" : ""}`
         }
       >
         <i className="bi bi-gear"></i>
@@ -67,7 +72,7 @@ function Sidebar() {
         <span className="theme-status-dot"></span>
       </div>
     </aside>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;

@@ -9,6 +9,7 @@ import CalendarPage from "./pages/CalendarPage";
 import PassedExamsPage from "./pages/PassedExamsPage";
 import GradeGoalPage from "./pages/GradeGoalPage";
 import MaterialsPage from "./pages/MaterialsPage";
+import PdfImportPage from './pages/PdfImportPage'
 function App() {
   return (
     <Routes>
@@ -34,16 +35,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/pdf-import"
-          element={
-            <SectionPage
-              title="Uvoz PDF-a"
-              description="Ovde će korisnik ubacivati plan studija i izdvajati predmete za svoj smer."
-              icon="bi-file-earmark-pdf"
-            />
-          }
-        />
+       <Route path="/pdf-import" element={<PdfImportPage />} />
 
         <Route
           path="/settings"
