@@ -37,6 +37,19 @@ export function SubjectProvider({ children }) {
     setSubjects((previousSubjects) => [...previousSubjects, newSubject])
   }
 
+  function updateSubject(subjectId, updatedSubject) {
+    setSubjects((previousSubjects) =>
+      previousSubjects.map((subject) =>
+        subject.id === subjectId
+          ? {
+              ...subject,
+              ...updatedSubject,
+            }
+          : subject
+      )
+    )
+  }
+
   function deleteSubject(subjectId) {
     setSubjects((previousSubjects) =>
       previousSubjects.filter((subject) => subject.id !== subjectId)
@@ -48,6 +61,7 @@ export function SubjectProvider({ children }) {
       value={{
         subjects,
         addSubject,
+        updateSubject,
         deleteSubject,
       }}
     >
@@ -60,7 +74,9 @@ export function useSubjects() {
   const context = useContext(SubjectContext)
 
   if (!context) {
-    throw new Error('useSubjects mora da se koristi unutar SubjectProvider komponente.')
+    throw new Error(
+      'useSubjects mora da se koristi unutar SubjectProvider komponente.'
+    )
   }
 
   return context

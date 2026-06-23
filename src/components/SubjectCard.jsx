@@ -1,7 +1,8 @@
 import { useTasks } from '../context/TaskContext'
 import { formatDate } from '../utils/dateUtils'
+import { getSubjectColorValue } from '../utils/subjectColorUtils'
 
-function SubjectCard({ subject, onDelete }) {
+function SubjectCard({ subject, onDelete, onEdit }) {
   const { tasks } = useTasks()
 
   const activeTasks = tasks.filter(
@@ -13,22 +14,39 @@ function SubjectCard({ subject, onDelete }) {
   )[0]
 
   return (
-    <article className={`subject-card subject-card-${subject.color}`}>
+    <article
+      className="subject-card"
+      style={{
+        '--subject-color': getSubjectColorValue(subject.color),
+      }}
+    >
       <div className="subject-card-header">
         <div className="subject-code-wrapper">
           <span className="subject-color-dot"></span>
           <span className="subject-code">{subject.code}</span>
         </div>
 
-        <button
-          type="button"
-          className="subject-delete-button"
-          onClick={() => onDelete(subject)}
-          aria-label={`Obriši predmet ${subject.name}`}
-          title="Obriši predmet"
-        >
-          <i className="bi bi-trash3"></i>
-        </button>
+        <div className="subject-card-actions">
+          <button
+            type="button"
+            className="subject-edit-button"
+            onClick={() => onEdit(subject)}
+            aria-label={`Izmeni predmet ${subject.name}`}
+            title="Izmeni predmet"
+          >
+            <i className="bi bi-pencil-square"></i>
+          </button>
+
+          <button
+            type="button"
+            className="subject-delete-button"
+            onClick={() => onDelete(subject)}
+            aria-label={`Obriši predmet ${subject.name}`}
+            title="Obriši predmet"
+          >
+            <i className="bi bi-trash3"></i>
+          </button>
+        </div>
       </div>
 
       <h2>{subject.name}</h2>

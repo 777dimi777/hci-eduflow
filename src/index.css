@@ -3566,3 +3566,106 @@ p {
     width: 100%;
   }
 }
+.subject-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.subject-edit-button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #84938a;
+  cursor: pointer;
+}
+
+.subject-edit-button:hover {
+  background: color-mix(in srgb, var(--subject-color) 14%, transparent);
+  color: var(--subject-color);
+}
+
+.subject-color-field {
+  grid-column: span 2;
+}
+
+.subject-color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.subject-color-option {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 10px;
+  border: 1px solid rgba(134, 239, 172, 0.12);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.02);
+  color: #9eb0a4;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 700;
+  transition: 0.18s ease;
+}
+
+.subject-color-option:hover {
+  border-color: color-mix(in srgb, var(--picker-color) 45%, transparent);
+  color: #eff9f1;
+  transform: translateY(-1px);
+}
+
+.subject-color-option-active {
+  border-color: var(--picker-color);
+  background: color-mix(in srgb, var(--picker-color) 13%, transparent);
+  color: #eff9f1;
+  box-shadow: 0 0 0 2px
+    color-mix(in srgb, var(--picker-color) 14%, transparent);
+}
+
+.subject-color-option-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--picker-color);
+  box-shadow: 0 0 10px var(--picker-color);
+}
+
+.subjects-page-feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 20px;
+  padding: 11px 13px;
+  border: 1px solid rgba(74, 222, 128, 0.22);
+  border-radius: 11px;
+  background: rgba(74, 222, 128, 0.08);
+  color: #9cf0b7;
+  font-size: 0.8rem;
+  font-weight: 650;
+  animation: subjects-feedback-enter 0.25s ease both;
+}
+
+@keyframes subjects-feedback-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .subject-color-field {
+    grid-column: auto;
+  }
+}
