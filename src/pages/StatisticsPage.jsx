@@ -1,60 +1,59 @@
-import { useMemo } from 'react'
-import { useAcademic } from '../context/AcademicContext'
-import { useSubjects } from '../context/SubjectContext'
-import { useTasks } from '../context/TaskContext'
+import { useMemo } from "react";
+import { useAcademic } from "../context/AcademicContext";
+import { useSubjects } from "../context/SubjectContext";
+import { useTasks } from "../context/TaskContext";
 import {
   calculateTotalEcts,
   calculateWeightedAverage,
   formatAverage,
-} from '../utils/gradeUtils'
-import { getSubjectColorValue } from '../utils/subjectColorUtils'
-import WeeklyWorkloadPanel from '../components/WeeklyWorkloadPanel'
+} from "../utils/gradeUtils";
+import { getSubjectColorValue } from "../utils/subjectColorUtils";
+import WeeklyWorkloadPanel from "../components/WeeklyWorkloadPanel";
+import WeeklyWorkloadPanel from "../components/WeeklyWorkloadPanel";
 function StatisticsPage() {
-  const { subjects } = useSubjects()
-  const { tasks } = useTasks()
-  const { passedExams } = useAcademic()
+  const { subjects } = useSubjects();
+  const { tasks } = useTasks();
+  const { passedExams } = useAcademic();
 
   const statistics = useMemo(() => {
-    const totalTasks = tasks.length
+    const totalTasks = tasks.length;
     const completedTasks = tasks.filter(
-      (task) => task.status === 'done'
-    ).length
+      (task) => task.status === "done",
+    ).length;
 
-    const activeTasks = totalTasks - completedTasks
+    const activeTasks = totalTasks - completedTasks;
 
     const completionRate =
-      totalTasks > 0
-        ? Math.round((completedTasks / totalTasks) * 100)
-        : 0
+      totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
     const priorityStats = {
       high: tasks.filter(
-        (task) => task.status !== 'done' && task.priority === 'high'
+        (task) => task.status !== "done" && task.priority === "high",
       ).length,
       medium: tasks.filter(
-        (task) => task.status !== 'done' && task.priority === 'medium'
+        (task) => task.status !== "done" && task.priority === "medium",
       ).length,
       low: tasks.filter(
-        (task) => task.status !== 'done' && task.priority === 'low'
+        (task) => task.status !== "done" && task.priority === "low",
       ).length,
-    }
+    };
 
     const subjectStats = subjects
       .map((subject) => {
         const subjectTasks = tasks.filter(
-          (task) => Number(task.subjectId) === Number(subject.id)
-        )
+          (task) => Number(task.subjectId) === Number(subject.id),
+        );
 
         const completed = subjectTasks.filter(
-          (task) => task.status === 'done'
-        ).length
+          (task) => task.status === "done",
+        ).length;
 
-        const active = subjectTasks.length - completed
+        const active = subjectTasks.length - completed;
 
         const calculatedProgress =
           subjectTasks.length > 0
             ? Math.round((completed / subjectTasks.length) * 100)
-            : Number(subject.progress || 0)
+            : Number(subject.progress || 0);
 
         return {
           ...subject,
@@ -62,24 +61,23 @@ function StatisticsPage() {
           completedTasks: completed,
           activeTasks: active,
           calculatedProgress,
-        }
+        };
       })
       .sort((firstSubject, secondSubject) => {
         if (secondSubject.activeTasks !== firstSubject.activeTasks) {
-          return secondSubject.activeTasks - firstSubject.activeTasks
+          return secondSubject.activeTasks - firstSubject.activeTasks;
         }
 
         return (
-          secondSubject.calculatedProgress -
-          firstSubject.calculatedProgress
-        )
-      })
+          secondSubject.calculatedProgress - firstSubject.calculatedProgress
+        );
+      });
 
     const busiestSubject =
       [...subjectStats].sort(
         (firstSubject, secondSubject) =>
-          secondSubject.activeTasks - firstSubject.activeTasks
-      )[0] || null
+          secondSubject.activeTasks - firstSubject.activeTasks,
+      )[0] || null;
 
     return {
       totalTasks,
@@ -92,15 +90,15 @@ function StatisticsPage() {
       totalEcts: calculateTotalEcts(passedExams),
       weightedAverage: calculateWeightedAverage(passedExams),
       passedExamCount: passedExams.length,
-    }
-  }, [subjects, tasks, passedExams])
+    };
+  }, [subjects, tasks, passedExams]);
 
   const maxPriorityCount = Math.max(
     statistics.priorityStats.high,
     statistics.priorityStats.medium,
     statistics.priorityStats.low,
-    1
-  )
+    1,
+  );
 
   return (
     <section className="statistics-page">
@@ -158,7 +156,7 @@ function StatisticsPage() {
             <strong>
               {statistics.passedExamCount > 0
                 ? formatAverage(statistics.weightedAverage)
-                : '—'}
+                : "—"}
             </strong>
             <small>{statistics.totalEcts} osvojenih ESPB</small>
           </div>
@@ -187,7 +185,7 @@ function StatisticsPage() {
                   className="statistics-subject-row"
                   key={subject.id}
                   style={{
-                    '--subject-color': getSubjectColorValue(subject.color),
+                    "--subject-color": getSubjectColorValue(subject.color),
                   }}
                 >
                   <div className="statistics-subject-main">
@@ -199,7 +197,7 @@ function StatisticsPage() {
                       </strong>
 
                       <span>
-                        {subject.completedTasks}/{subject.totalTasks} završeno ·{' '}
+                        {subject.completedTasks}/{subject.totalTasks} završeno ·{" "}
                         {subject.activeTasks} aktivno
                       </span>
                     </div>
@@ -253,8 +251,7 @@ function StatisticsPage() {
                     className="priority-bar-high"
                     style={{
                       width: `${
-                        (statistics.priorityStats.high / maxPriorityCount) *
-                        100
+                        (statistics.priorityStats.high / maxPriorityCount) * 100
                       }%`,
                     }}
                   ></span>
@@ -293,8 +290,7 @@ function StatisticsPage() {
                     className="priority-bar-low"
                     style={{
                       width: `${
-                        (statistics.priorityStats.low / maxPriorityCount) *
-                        100
+                        (statistics.priorityStats.low / maxPriorityCount) * 100
                       }%`,
                     }}
                   ></span>
@@ -315,16 +311,16 @@ function StatisticsPage() {
                 <h2>{statistics.busiestSubject.name}</h2>
 
                 <p>
-                  Trenutno ima{' '}
-                  <strong>{statistics.busiestSubject.activeTasks}</strong>{' '}
+                  Trenutno ima{" "}
+                  <strong>{statistics.busiestSubject.activeTasks}</strong>{" "}
                   aktivne obaveze. Posveti mu više vremena ove nedelje.
                 </p>
 
                 <span
                   className="statistics-focus-subject"
                   style={{
-                    '--subject-color': getSubjectColorValue(
-                      statistics.busiestSubject.color
+                    "--subject-color": getSubjectColorValue(
+                      statistics.busiestSubject.color,
                     ),
                   }}
                 >
@@ -339,12 +335,14 @@ function StatisticsPage() {
               </>
             )}
           </section>
-               </aside>
+        </aside>
       </div>
 
       <WeeklyWorkloadPanel />
+
+      <SemesterPerformancePanel />
     </section>
-  )
+  );
 }
 
-export default StatisticsPage
+export default StatisticsPage;
