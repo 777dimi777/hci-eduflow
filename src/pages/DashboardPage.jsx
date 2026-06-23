@@ -5,6 +5,8 @@ import { useTasks } from '../context/TaskContext'
 import { formatDate } from '../utils/dateUtils'
 import DailyFocusPanel from '../components/DailyFocusPanel'
 import SmartStudyAssistant from '../components/SmartStudyAssistant'
+import DailyLoadInsight from "../components/DailyLoadInsight";
+
 function DashboardPage() {
   const { subjects } = useSubjects()
   const { tasks } = useTasks()
@@ -167,6 +169,7 @@ function DashboardPage() {
         </section>
       </div>
       <DailyFocusPanel />
+      <DailyLoadInsight />
       <SmartStudyAssistant />
     </section>
   )
